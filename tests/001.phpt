@@ -4,7 +4,11 @@ Check for sample presence
 <?php if (!extension_loaded("sample")) print "skip"; ?>
 --FILE--
 <?php 
-echo "sample extension is available";
+$ext = new ReflectionExtension('sample');
+$ext->info();
 ?>
 --EXPECT--
-sample extension is available
+sample
+
+sample support => enabled
+1. => Basic extension
