@@ -10,9 +10,6 @@
 
 #include "php.h"
 
-extern zend_module_entry sample_zend_module_entry;
-#define phpext_sample_ptr &sample_zend_module_entry
-
 #ifdef ZTS
 #include "TSRM.h"
 #endif

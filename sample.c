@@ -1,5 +1,4 @@
 #include "php_sample.h"
-#include "ext/standard/info.h"
 
 zend_module_entry sample_module_entry = {
   STANDARD_MODULE_HEADER,
