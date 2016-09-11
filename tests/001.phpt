@@ -4,7 +4,7 @@ Check for sample presence
 <?php if (!extension_loaded("sample")) print "skip"; ?>
 --FILE--
 <?php 
-echo "sample extension is available";
+echo \sample\helloWorld();
 ?>
 --EXPECT--
-sample extension is available
+Hello World!
