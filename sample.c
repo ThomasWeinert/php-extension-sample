@@ -1,26 +1,23 @@
 #include "php_sample.h"
 
-/*
-  1. define the namespace for your extension
- */
 #define SAMPLE_NS "sample"
 
-/*
-  2. implement a php function
- */
-PHP_FUNCTION(sample_hello_world)
+PHP_FUNCTION(sample_hello_name)
 {
-  php_printf("Hello World!\n");
+  char *name;
+  size_t name_len;
+
+  ZEND_PARSE_PARAMETERS_START(1, 1)
+  	Z_PARAM_STRING(name, name_len)
+  ZEND_PARSE_PARAMETERS_END();
+
+  php_printf("Hello ");
+  PHPWRITE(name, name_len);
+  php_printf("!\n");
 }
 
-/*
-  3. define a list for your extension functions
-*/
 const zend_function_entry php_sample_functions[] = {
-  /*
-    4. register the function in the namespace
-   */
-  ZEND_NS_NAMED_FE(SAMPLE_NS, helloWorld, ZEND_FN(sample_hello_world), NULL)
+  ZEND_NS_NAMED_FE(SAMPLE_NS, hello, ZEND_FN(sample_hello_name), NULL)
   PHP_FE_END
 };
 
