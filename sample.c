@@ -2,29 +2,29 @@
 
 #define SAMPLE_NS "sample"
 
-PHP_FUNCTION(sample_hello_name)
+PHP_FUNCTION(sample_multiply)
 {
   /*
-    1. define variables for string value and length
-  */
-  char *name;
-  size_t name_len;
+   1. define/initialize variables
+   */
+  zend_long first;
+  zend_long second = 1;
 
   /*
     2. parse parameters using FAST ZPP Api
     https://wiki.php.net/rfc/fast_zpp
    */
-  ZEND_PARSE_PARAMETERS_START(1, 1)
-  	Z_PARAM_STRING(name, name_len)
+  ZEND_PARSE_PARAMETERS_START(1, 2)
+  	Z_PARAM_LONG(first)
+  	Z_PARAM_OPTIONAL
+  	Z_PARAM_LONG(second)
   ZEND_PARSE_PARAMETERS_END();
 
-  php_printf("Hello ");
-  PHPWRITE(name, name_len);
-  php_printf("!\n");
+  RETURN_LONG(first * second);
 }
 
 const zend_function_entry php_sample_functions[] = {
-  ZEND_NS_NAMED_FE(SAMPLE_NS, hello, ZEND_FN(sample_hello_name), NULL)
+  ZEND_NS_NAMED_FE(SAMPLE_NS, multiply, ZEND_FN(sample_multiply), NULL)
   PHP_FE_END
 };
 
