@@ -1,10 +1,14 @@
 --TEST--
-Check for sample presence
+Capture an exception
 --SKIPIF--
 <?php if (!extension_loaded("sample")) print "skip"; ?>
 --FILE--
-<?php 
-echo \sample\helloWorld();
+<?php
+try {
+  \sample\triggerException();
+} catch (\Sample\ExceptionName $e) {
+  echo $e->getCode(), ' -> ', $e->getMessage();
+}
 ?>
 --EXPECT--
-Hello World!
+42 -> Sample Exception Message
