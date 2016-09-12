@@ -1,35 +1,30 @@
 #include "php_sample.h"
-
 /*
-  1. define the namespace for your extension
- */
+  1. include zend extension api and spl extensions
+*/
+#include <zend_exceptions.h>
+#include "ext/spl/spl_exceptions.h"
+
 #define SAMPLE_NS "sample"
 
 /*
-  2. implement a php function
+  2. throw the exception
  */
-PHP_FUNCTION(sample_hello_world)
+PHP_FUNCTION(sample_trigger_exception)
 {
-  php_printf("Hello World!\n");
+    zend_throw_exception_ex(
+        spl_ce_LogicException, 42, "Sample Exception Message"
+    );
 }
 
-/*
-  3. define a list for your extension functions
-*/
 const zend_function_entry php_sample_functions[] = {
-  /*
-    4. register the function in the namespace
-   */
-  ZEND_NS_NAMED_FE(SAMPLE_NS, helloWorld, ZEND_FN(sample_hello_world), NULL)
+  ZEND_NS_NAMED_FE(SAMPLE_NS, trigger, ZEND_FN(sample_trigger_exception), NULL)
   PHP_FE_END
 };
 
 zend_module_entry sample_module_entry = {
   STANDARD_MODULE_HEADER,
   PHP_SAMPLE_EXTNAME,
-  /*
-   5. add the functions to the module entry
-   */
   php_sample_functions, /* Functions */
   NULL, /* MINIT */
   NULL, /* MSHUTDOWN */

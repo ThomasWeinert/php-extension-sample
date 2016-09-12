@@ -3,8 +3,12 @@ Check for sample presence
 --SKIPIF--
 <?php if (!extension_loaded("sample")) print "skip"; ?>
 --FILE--
-<?php 
-echo \sample\helloWorld();
+<?php
+try {
+  echo \sample\trigger();
+} catch (\LogicException $e) {
+  echo $e->getCode(), ' -> ', $e->getMessage();
+}
 ?>
 --EXPECT--
-Hello World!
+42 -> Sample Exception Message
