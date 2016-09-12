@@ -2,29 +2,68 @@
 
 #define SAMPLE_NS "sample"
 
-PHP_FUNCTION(sample_hello_name)
+PHP_FUNCTION(sample_output)
 {
-  /*
-    1. define variables for string value and length
-  */
-  char *name;
-  size_t name_len;
+  zval *value;
 
   /*
-    2. parse parameters using FAST ZPP Api
-    https://wiki.php.net/rfc/fast_zpp
+    1. fetch the parameter as ZVAL (pointer)
    */
   ZEND_PARSE_PARAMETERS_START(1, 1)
-  	Z_PARAM_STRING(name, name_len)
+  	Z_PARAM_ZVAL(value)
   ZEND_PARSE_PARAMETERS_END();
 
-  php_printf("Hello ");
-  PHPWRITE(name, name_len);
-  php_printf("!\n");
+  /*
+    2. Z_TYPE_P allows you to get the type
+   */
+  switch (Z_TYPE_P(value)) {
+  /*
+    3. compare it with the IS_* macros
+   */
+  case IS_NULL :
+    php_printf("NULL");
+    break;
+  case IS_TRUE :
+    php_printf("Boolean: TRUE");
+    break;
+  case IS_FALSE :
+    php_printf("Boolean: FALSE");
+    break;
+  case IS_LONG :
+    php_printf("Integer: ");
+    /*
+      4a. convert_to_* functions can change the zval into another type.
+    */
+    convert_to_string(value);
+    PHPWRITE(Z_STRVAL_P(value), Z_STRLEN_P(value));
+    break;
+  case IS_DOUBLE :
+    /*
+      4b. Z_*VAL_P() allows you to read the value from the zval
+    */
+    php_printf("Float: %f", Z_DVAL_P(value));
+    break;
+  case IS_STRING :
+    php_printf("String: ");
+    PHPWRITE(Z_STRVAL_P(value), Z_STRLEN_P(value));
+    break;
+  case IS_RESOURCE :
+    php_printf("Resource: #%ld", Z_RESVAL_P(value));
+    break;
+  case IS_ARRAY :
+    php_printf("Array");
+    break;
+  case IS_OBJECT :
+    php_printf("Object");
+    break;
+  default :
+    php_printf("UNKNOWN");
+    break;
+  }
 }
 
 const zend_function_entry php_sample_functions[] = {
-  ZEND_NS_NAMED_FE(SAMPLE_NS, hello, ZEND_FN(sample_hello_name), NULL)
+  ZEND_NS_NAMED_FE(SAMPLE_NS, output, ZEND_FN(sample_output), NULL)
   PHP_FE_END
 };
 
