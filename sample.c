@@ -2,18 +2,24 @@
 
 #define SAMPLE_NS "sample"
 
+/*
+  1. define the arguments *_EX allows to define the number of required arguments in the third parameter
+
+  validate with 'php -re sample'
+
+  ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO(name, type, class_name, allow_null)
+  ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(name, return_reference, required_num_args, type, class_name, allow_null)
+*/
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(ArgInfo_sample_multiply, 0, 1, IS_LONG, NULL, 0)
+    ZEND_ARG_TYPE_INFO(0, first, IS_LONG, 0)
+    ZEND_ARG_TYPE_INFO(0, second, IS_LONG, 0)
+ZEND_END_ARG_INFO()
+
 PHP_FUNCTION(sample_multiply)
 {
-  /*
-   1. define/initialize variables
-   */
   zend_long first;
   zend_long second = 1;
 
-  /*
-    2. parse parameters using FAST ZPP Api
-    https://wiki.php.net/rfc/fast_zpp
-   */
   ZEND_PARSE_PARAMETERS_START(1, 2)
   	Z_PARAM_LONG(first)
   	Z_PARAM_OPTIONAL
@@ -24,7 +30,10 @@ PHP_FUNCTION(sample_multiply)
 }
 
 const zend_function_entry php_sample_functions[] = {
-  ZEND_NS_NAMED_FE(SAMPLE_NS, multiply, ZEND_FN(sample_multiply), NULL)
+  /*
+    2. provide the argument info in the function registration
+  */
+  ZEND_NS_NAMED_FE(SAMPLE_NS, multiply, ZEND_FN(sample_multiply), ArgInfo_sample_multiply)
   PHP_FE_END
 };
 
