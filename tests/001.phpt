@@ -4,7 +4,8 @@ Check for sample presence
 <?php if (!extension_loaded("sample")) print "skip"; ?>
 --FILE--
 <?php 
-echo \sample\helloWorld();
+$r = sample\createResource();
+sample\useResource($r);
 ?>
 --EXPECT--
-Hello World!
+Number: 42

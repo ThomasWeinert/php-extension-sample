@@ -1,37 +1,77 @@
 #include "php_sample.h"
 
-/*
-  1. define the namespace for your extension
- */
 #define SAMPLE_NS "sample"
 
 /*
-  2. implement a php function
+  1. define the resource struct in php_sample.h
  */
-PHP_FUNCTION(sample_hello_world)
+
+/*
+  2. define a name for the resource name and a variable for the list entry
+ */
+#define SAMPLE_RESOURCE_NAME "sample_resource"
+int le_sample_resource_name;
+
+
+/*
+  3. implement a destructor for the resource
+*/
+static void sample_resource_dtor(zend_resource *rsrc)
 {
-  php_printf("Hello World!\n");
+    sample_resource *r = (sample_resource*)rsrc->ptr;
+
+    if (r) {
+        efree(r);
+    }
 }
 
 /*
-  3. define a list for your extension functions
+  4. implement a php function that creates the resource
 */
+PHP_FUNCTION(sample_create_resource)
+{
+    sample_resource *r;
+    r = emalloc(sizeof(sample_resource));
+    r->number = 42;
+    RETURN_RES(zend_register_resource(r, le_sample_resource_name));
+}
+
+/*
+  6. Make use of the resource
+*/
+PHP_FUNCTION(sample_use_resource)
+{
+    sample_resource *r;
+    zval *zr;
+
+    ZEND_PARSE_PARAMETERS_START(1, 1)
+    	Z_PARAM_RESOURCE(zr)
+    ZEND_PARSE_PARAMETERS_END();
+
+    r = (sample_resource *)zend_fetch_resource(Z_RES_P(zr), SAMPLE_RESOURCE_NAME, le_sample_resource_name);
+
+    php_printf("Number: %ld", r->number);
+}
+
+PHP_MINIT_FUNCTION(sample)
+{
+    /*
+      5. register the resource
+    */
+    le_sample_resource_name = zend_register_list_destructors_ex(sample_resource_dtor, NULL, SAMPLE_RESOURCE_NAME, module_number);
+}
+
 const zend_function_entry php_sample_functions[] = {
-  /*
-    4. register the function in the namespace
-   */
-  ZEND_NS_NAMED_FE(SAMPLE_NS, helloWorld, ZEND_FN(sample_hello_world), NULL)
+  ZEND_NS_NAMED_FE(SAMPLE_NS, createResource, ZEND_FN(sample_create_resource), NULL)
+  ZEND_NS_NAMED_FE(SAMPLE_NS, useResource, ZEND_FN(sample_use_resource), NULL)
   PHP_FE_END
 };
 
 zend_module_entry sample_module_entry = {
   STANDARD_MODULE_HEADER,
   PHP_SAMPLE_EXTNAME,
-  /*
-   5. add the functions to the module entry
-   */
   php_sample_functions, /* Functions */
-  NULL, /* MINIT */
+  PHP_MINIT(sample), /* MINIT */
   NULL, /* MSHUTDOWN */
   NULL, /* RINIT */
   NULL, /* RSHUTDOWN */

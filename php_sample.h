@@ -10,6 +10,13 @@
 
 #include "php.h"
 
+/*
+  1. define a structure for the resource
+ */
+typedef struct {
+   zend_long number;
+} sample_resource;
+
 #ifdef ZTS
 #include "TSRM.h"
 #endif
