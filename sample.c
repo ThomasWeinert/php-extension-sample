@@ -2,29 +2,57 @@
 
 #define SAMPLE_NS "sample"
 
-PHP_FUNCTION(sample_hello_name)
+PHP_FUNCTION(sample_hello_names)
 {
   /*
-    1. define variables for string value and length
+    1. define variables for the array
   */
-  char *name;
-  size_t name_len;
+  zval *z_names;
+  HashTable *names;
 
   /*
     2. parse parameters using FAST ZPP Api
     https://wiki.php.net/rfc/fast_zpp
    */
   ZEND_PARSE_PARAMETERS_START(1, 1)
-  	Z_PARAM_STRING(name, name_len)
+  	Z_PARAM_ARRAY(z_names)
   ZEND_PARSE_PARAMETERS_END();
 
-  php_printf("Hello ");
-  PHPWRITE(name, name_len);
-  php_printf("!\n");
+  names = HASH_OF(z_names);
+
+  /*
+    3. use zend_hash_* functions to iterate the array
+   */
+  for (
+      zend_hash_internal_pointer_reset(names);
+      zend_hash_has_more_elements(names) == SUCCESS;
+      zend_hash_move_forward(names)
+  ) {
+    zval *entry, tmpcopy;
+
+    /*
+      4. fetch current element data
+    */
+    if ((entry = zend_hash_get_current_data(names)) != NULL) {
+
+      /*
+        5. copy the data variable to keep the original from being modified
+      */
+      ZVAL_COPY(&tmpcopy, entry);
+
+      /*
+        6. convert and output
+       */
+      convert_to_string(&tmpcopy);
+      php_printf("Hello ");
+      PHPWRITE(Z_STRVAL(tmpcopy), Z_STRLEN(tmpcopy));
+      php_printf("!\n");
+    }
+  }
 }
 
 const zend_function_entry php_sample_functions[] = {
-  ZEND_NS_NAMED_FE(SAMPLE_NS, hello, ZEND_FN(sample_hello_name), NULL)
+  ZEND_NS_NAMED_FE(SAMPLE_NS, hello, ZEND_FN(sample_hello_names), NULL)
   PHP_FE_END
 };
 
