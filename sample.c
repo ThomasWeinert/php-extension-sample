@@ -25,9 +25,7 @@ PHP_FUNCTION(sample_hello_names)
   		zval *arg = args + i;
 
       convert_to_string(arg);
-      php_printf("Hello ");
-      PHPWRITE(Z_STRVAL_P(arg), Z_STRLEN_P(arg));
-      php_printf("!\n");
+      php_printf("Hello %s!\n", Z_STRVAL_P(arg));
   }
 }
 
