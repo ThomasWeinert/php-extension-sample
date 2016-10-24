@@ -9,7 +9,6 @@ PHP_FUNCTION(sample_hello_names)
   */
   zval *args;
   int argc, i;
-  HashTable *names;
 
   /*
     2. parse parameters using FAST ZPP Api
@@ -19,9 +18,11 @@ PHP_FUNCTION(sample_hello_names)
   	Z_PARAM_VARIADIC('+', args, argc)
   ZEND_PARSE_PARAMETERS_END();
 
+  /*
+    3. Iterate the arguments
+   */
   for (i = 0; i < argc; i++) {
   		zval *arg = args + i;
-  		ZVAL_DEREF(arg);
 
       convert_to_string(arg);
       php_printf("Hello ");
