@@ -7,44 +7,28 @@ PHP_FUNCTION(sample_hello_names)
   /*
     1. define variables for the array
   */
+  zval *args, *arg;
+  int argc, i;
   HashTable *names;
 
   /*
     2. parse parameters using FAST ZPP Api
     https://wiki.php.net/rfc/fast_zpp
    */
-  ZEND_PARSE_PARAMETERS_START(1, 1)
-  	Z_PARAM_ARRAY_HT(names)
+  ZEND_PARSE_PARAMETERS_START(1, -1)
+  	Z_PARAM_VARIADIC('+', args, argc)
   ZEND_PARSE_PARAMETERS_END();
 
-  /*
-    3. use zend_hash_* functions to iterate the array
-   */
-  for (
-      zend_hash_internal_pointer_reset(names);
-      zend_hash_has_more_elements(names) == SUCCESS;
-      zend_hash_move_forward(names)
-  ) {
-    zval *entry, tmpcopy;
+  arg = args;
+  for (i = 0; i < argc; i++) {
+  		zval *arg = args + i;
 
-    /*
-      4. fetch current element data
-    */
-    if ((entry = zend_hash_get_current_data(names)) != NULL) {
+  		ZVAL_DEREF(arg);
 
-      /*
-        5. copy the data variable to keep the original from being modified
-      */
-      ZVAL_COPY(&tmpcopy, entry);
-
-      /*
-        6. convert and output
-       */
-      convert_to_string(&tmpcopy);
+      convert_to_string(arg);
       php_printf("Hello ");
-      PHPWRITE(Z_STRVAL(tmpcopy), Z_STRLEN(tmpcopy));
+      PHPWRITE(Z_STRVAL_P(arg), Z_STRLEN_P(arg));
       php_printf("!\n");
-    }
   }
 }
 
