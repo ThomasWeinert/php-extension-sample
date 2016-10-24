@@ -7,7 +7,6 @@ PHP_FUNCTION(sample_hello_names)
   /*
     1. define variables for the array
   */
-  zval *z_names;
   HashTable *names;
 
   /*
@@ -15,10 +14,8 @@ PHP_FUNCTION(sample_hello_names)
     https://wiki.php.net/rfc/fast_zpp
    */
   ZEND_PARSE_PARAMETERS_START(1, 1)
-  	Z_PARAM_ARRAY(z_names)
+  	Z_PARAM_ARRAY_HT(names)
   ZEND_PARSE_PARAMETERS_END();
-
-  names = HASH_OF(z_names);
 
   /*
     3. use zend_hash_* functions to iterate the array
