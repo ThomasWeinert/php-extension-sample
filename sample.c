@@ -7,7 +7,7 @@ PHP_FUNCTION(sample_hello_names)
   /*
     1. define variables for the array
   */
-  zval *args, *arg;
+  zval *args;
   int argc, i;
   HashTable *names;
 
@@ -19,10 +19,8 @@ PHP_FUNCTION(sample_hello_names)
   	Z_PARAM_VARIADIC('+', args, argc)
   ZEND_PARSE_PARAMETERS_END();
 
-  arg = args;
   for (i = 0; i < argc; i++) {
   		zval *arg = args + i;
-
   		ZVAL_DEREF(arg);
 
       convert_to_string(arg);
