@@ -1,35 +1,40 @@
 #include "php_sample.h"
 
-/*
-  1. define the namespace for your extension
- */
 #define SAMPLE_NS "sample"
 
-/*
-  2. implement a php function
- */
-PHP_FUNCTION(sample_hello_world)
+PHP_FUNCTION(sample_answer)
 {
-  php_printf("Hello World!\n");
+  /*
+    1. Use a type specific template to return a value
+      RETURN_BOOL(b)
+      RETURN_NULL()
+      RETURN_LONG(l)
+      RETURN_DOUBLE(d)
+      RETURN_STR(s)
+      RETURN_INTERNED_STR(s)
+      RETURN_NEW_STR(s)
+      RETURN_STR_COPY(s)
+      RETURN_STRING(s)
+      RETURN_STRINGL(s, l)
+      RETURN_EMPTY_STRING()
+      RETURN_RES(r)
+      RETURN_ARR(r)
+      RETURN_OBJ(r)
+      RETURN_ZVAL(zv, copy, dtor)
+      RETURN_FALSE
+      RETURN_TRUE
+   */
+  RETURN_LONG(42);
 }
 
-/*
-  3. define a list for your extension functions
-*/
 const zend_function_entry php_sample_functions[] = {
-  /*
-    4. register the function in the namespace
-   */
-  ZEND_NS_NAMED_FE(SAMPLE_NS, helloWorld, ZEND_FN(sample_hello_world), NULL)
+  ZEND_NS_NAMED_FE(SAMPLE_NS, answer, ZEND_FN(sample_answer), NULL)
   PHP_FE_END
 };
 
 zend_module_entry sample_module_entry = {
   STANDARD_MODULE_HEADER,
   PHP_SAMPLE_EXTNAME,
-  /*
-   5. add the functions to the module entry
-   */
   php_sample_functions, /* Functions */
   NULL, /* MINIT */
   NULL, /* MSHUTDOWN */
