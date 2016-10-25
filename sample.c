@@ -30,12 +30,8 @@ PHP_FUNCTION(sample_output)
     php_printf("Boolean: FALSE");
     break;
   case IS_LONG :
-    php_printf("Integer: ");
-    /*
-      4a. convert_to_* functions can change the zval into another type.
-    */
     convert_to_string(value);
-    PHPWRITE(Z_STRVAL_P(value), Z_STRLEN_P(value));
+    php_printf("Integer: %s", Z_STRVAL_P(value));
     break;
   case IS_DOUBLE :
     /*
@@ -44,8 +40,7 @@ PHP_FUNCTION(sample_output)
     php_printf("Float: %f", Z_DVAL_P(value));
     break;
   case IS_STRING :
-    php_printf("String: ");
-    PHPWRITE(Z_STRVAL_P(value), Z_STRLEN_P(value));
+    php_printf("String: %s", Z_STRVAL_P(value));
     break;
   case IS_RESOURCE :
     php_printf("Resource: #%ld", Z_RESVAL_P(value));
