@@ -10,7 +10,7 @@
   2. define a name for the resource name and a variable for the list entry
  */
 #define SAMPLE_RESOURCE_NAME "sample_resource"
-int le_sample_resource_name;
+int le_sample_resource;
 
 
 /*
@@ -33,7 +33,7 @@ PHP_FUNCTION(sample_create_resource)
     sample_resource *r;
     r = emalloc(sizeof(sample_resource));
     r->number = 42;
-    RETURN_RES(zend_register_resource(r, le_sample_resource_name));
+    RETURN_RES(zend_register_resource(r, le_sample_resource));
 }
 
 /*
@@ -48,7 +48,7 @@ PHP_FUNCTION(sample_use_resource)
     	Z_PARAM_RESOURCE(zr)
     ZEND_PARSE_PARAMETERS_END();
 
-    r = (sample_resource *)zend_fetch_resource(Z_RES_P(zr), SAMPLE_RESOURCE_NAME, le_sample_resource_name);
+    r = (sample_resource *)zend_fetch_resource(Z_RES_P(zr), SAMPLE_RESOURCE_NAME, le_sample_resource);
 
     php_printf("Number: %ld", r->number);
 }
@@ -58,7 +58,7 @@ PHP_MINIT_FUNCTION(sample)
     /*
       5. register the resource
     */
-    le_sample_resource_name = zend_register_list_destructors_ex(sample_resource_dtor, NULL, SAMPLE_RESOURCE_NAME, module_number);
+    le_sample_resource = zend_register_list_destructors_ex(sample_resource_dtor, NULL, SAMPLE_RESOURCE_NAME, module_number);
 }
 
 const zend_function_entry php_sample_functions[] = {
