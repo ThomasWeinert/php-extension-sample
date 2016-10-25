@@ -1,33 +1,29 @@
 #include "php_sample.h"
 
-/*
-  1. define the namespace for your extension
- */
 #define SAMPLE_NS "sample"
 
-/*
-  2. define it as a template to use in the extension implementation
- */
-#define SAMPLE_INT 42
+#define PHP_SAMPLE_SC_NAME "SampleClass"
 
-/*
-  3. implement a MINIT function
-*/
+zend_class_entry *php_sample_sc_entry;
+const zend_function_entry php_sample_sc_functions[] = {
+  { NULL, NULL, NULL }
+};
+
 PHP_MINIT_FUNCTION(sample)
 {
-    /*
-       4. register the constant in the namespace
-     */
-    REGISTER_NS_LONG_CONSTANT(SAMPLE_NS, "SAMPLE_INT", SAMPLE_INT, CONST_CS | CONST_PERSISTENT);
+    zend_class_entry ce;
+    INIT_NS_CLASS_ENTRY(
+      ce, SAMPLE_NS, PHP_SAMPLE_SC_NAME, php_sample_sc_functions
+    );
+    php_sample_sc_entry = zend_register_internal_class(&ce TSRMLS_CC);
+
+    return SUCCESS;
 }
 
 zend_module_entry sample_module_entry = {
   STANDARD_MODULE_HEADER,
   PHP_SAMPLE_EXTNAME,
   NULL, /* Functions */
-  /*
-    5. register the MINIT function for the module
-  */
   PHP_MINIT(sample), /* MINIT */
   NULL, /* MSHUTDOWN */
   NULL, /* RINIT */
