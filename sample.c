@@ -41,9 +41,7 @@ PHP_FUNCTION(sample_hello_names)
         6. convert and output
        */
       convert_to_string(&tmpcopy);
-      php_printf("Hello ");
-      PHPWRITE(Z_STRVAL(tmpcopy), Z_STRLEN(tmpcopy));
-      php_printf("!\n");
+      php_printf("Hello %s!\n", Z_STRVAL(tmpcopy));
     }
   }
 }
