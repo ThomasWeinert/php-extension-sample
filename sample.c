@@ -17,7 +17,7 @@ PHP_METHOD(sample_Greeting, hello) {
 */
 const zend_function_entry php_sample_sc_functions[] = {
     PHP_ME(sample_Greeting, hello, NULL, ZEND_ACC_PUBLIC)
-    { NULL, NULL, NULL }
+    PHP_FE_END
 };
 
 PHP_MINIT_FUNCTION(sample)
