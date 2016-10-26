@@ -27,8 +27,6 @@ PHP_MINIT_FUNCTION(sample)
       ce, SAMPLE_NS, PHP_SAMPLE_CLASS_GREETING_NAME, php_sample_greeting_class_functions
     );
     php_sample_greeting_class_entry = zend_register_internal_class(&ce TSRMLS_CC);
-
-    return SUCCESS;
 }
 
 zend_module_entry sample_module_entry = {
