@@ -4,7 +4,8 @@ Output SAMPLE\SAMPLE_INT constant and expect 42
 <?php if (!extension_loaded("sample")) print "skip"; ?>
 --FILE--
 <?php
-echo Sample\SampleClass::class;
+$greeting = new Sample\Greeting();
+$greeting->hello();
 ?>
 --EXPECT--
-Sample\SampleClass
+Hello World!

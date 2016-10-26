@@ -1,12 +1,23 @@
 #include "php_sample.h"
 
 #define SAMPLE_NS "sample"
-
-#define PHP_SAMPLE_SC_NAME "SampleClass"
+#define PHP_SAMPLE_SC_NAME "Greeting"
 
 zend_class_entry *php_sample_sc_entry;
+
+/*
+ 1. Implement the method
+*/
+PHP_METHOD(sample_Greeting, hello) {
+    php_printf("Hello World!");
+}
+
+/*
+  2. register it in the function list for the class
+*/
 const zend_function_entry php_sample_sc_functions[] = {
-  { NULL, NULL, NULL }
+    PHP_ME(sample_Greeting, hello, NULL, ZEND_ACC_PUBLIC)
+    { NULL, NULL, NULL }
 };
 
 PHP_MINIT_FUNCTION(sample)
