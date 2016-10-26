@@ -16,7 +16,7 @@ zend_class_entry *php_sample_sc_entry;
   3. a function list for the methods
 */
 const zend_function_entry php_sample_sc_functions[] = {
-  { NULL, NULL, NULL }
+  PHP_FE_END
 };
 
 PHP_MINIT_FUNCTION(sample)
