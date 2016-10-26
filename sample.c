@@ -2,15 +2,28 @@
 
 #define SAMPLE_NS "sample"
 
+/*
+  1. a name for the class
+*/
 #define PHP_SAMPLE_SC_NAME "SampleClass"
 
+/*
+  2. a variable for the entry in the class list
+*/
 zend_class_entry *php_sample_sc_entry;
+
+/*
+  3. a function list for the methods
+*/
 const zend_function_entry php_sample_sc_functions[] = {
   { NULL, NULL, NULL }
 };
 
 PHP_MINIT_FUNCTION(sample)
 {
+    /*
+      4. Initialize and register the class
+    */
     zend_class_entry ce;
     INIT_NS_CLASS_ENTRY(
       ce, SAMPLE_NS, PHP_SAMPLE_SC_NAME, php_sample_sc_functions
