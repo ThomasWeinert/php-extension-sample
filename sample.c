@@ -3,32 +3,34 @@
 #define SAMPLE_NS "sample"
 
 /*
-  1. a name for the class
+  1. a name for the interface
 */
-#define PHP_SAMPLE_CLASS_NAME "SampleClass"
+#define PHP_SAMPLE_INTERFACE_NAME "SampleInterface"
 
 /*
   2. a variable for the entry in the class list
+  (Yes, interfaces are stored in the same list.)
 */
-zend_class_entry *php_sample_class_entry;
+zend_class_entry *php_sample_interface_entry;
 
 /*
   3. a function list for the methods
 */
-const zend_function_entry php_sample_class_functions[] = {
+const zend_function_entry php_sample_interface_functions[] = {
+  PHP_ABSTRACT_ME(sample_Interface, sampleMethod, NULL)
   PHP_FE_END
 };
 
 PHP_MINIT_FUNCTION(sample)
 {
     /*
-      4. Initialize and register the class
+      4. Initialize and register the interface
     */
     zend_class_entry ce;
     INIT_NS_CLASS_ENTRY(
-      ce, SAMPLE_NS, PHP_SAMPLE_CLASS_NAME, php_sample_class_functions
+      ce, SAMPLE_NS, PHP_SAMPLE_INTERFACE_NAME, php_sample_interface_functions
     );
-    php_sample_class_entry = zend_register_internal_class(&ce TSRMLS_CC);
+    php_sample_interface_entry = zend_register_internal_interface(&ce TSRMLS_CC);
 }
 
 zend_module_entry sample_module_entry = {

@@ -1,10 +1,16 @@
 --TEST--
-Output SAMPLE\SAMPLE_INT constant and expect 42
+Implement Sample\SampleInterface into an object and validate
 --SKIPIF--
 <?php if (!extension_loaded("sample")) print "skip"; ?>
 --FILE--
 <?php
-echo Sample\SampleClass::class;
+class SampleClass implements Sample\SampleInterface {
+  public function sampleMethod() {
+    echo ($this instanceof Sample\SampleInterface) ? 'Implemented Interface' : 'FAIL';
+  }
+}
+(new SampleClass())->sampleMethod();
+
 ?>
 --EXPECT--
-Sample\SampleClass
+Implemented Interface
