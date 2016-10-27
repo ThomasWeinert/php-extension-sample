@@ -1,5 +1,5 @@
 --TEST--
-Output SAMPLE\SAMPLE_INT constant and expect 42
+Output a greeting for the name provided as the constructor argument
 --SKIPIF--
 <?php if (!extension_loaded("sample")) print "skip"; ?>
 --FILE--
