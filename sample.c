@@ -28,12 +28,12 @@ PHP_METHOD(sample_Greeting, __construct) {
 }
 
 PHP_METHOD(sample_Greeting, hello) {
-    zval tmp, *name;
+    zval rv, *name;
 
     /*
       3. Read the property
     */
-    name = zend_read_property(php_sample_greeting_class_entry, getThis(), ZEND_STRL("name"), 0, &tmp);
+    name = zend_read_property(php_sample_greeting_class_entry, getThis(), ZEND_STRL("name"), 0, &rv);
 
     php_printf("Hello %s!", Z_STRVAL_P(name));
 }
