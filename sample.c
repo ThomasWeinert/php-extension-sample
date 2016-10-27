@@ -16,6 +16,7 @@ zend_class_entry *php_sample_class_entry;
   3. a function list for the methods
 */
 const zend_function_entry php_sample_class_functions[] = {
+  PHP_ABSTRACT_ME(sample_Class, sampleMethod, NULL)
   PHP_FE_END
 };
 
