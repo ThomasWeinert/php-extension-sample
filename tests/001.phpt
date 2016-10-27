@@ -4,8 +4,8 @@ Output SAMPLE\SAMPLE_INT constant and expect 42
 <?php if (!extension_loaded("sample")) print "skip"; ?>
 --FILE--
 <?php
-$greeting = new Sample\Greeting();
+$greeting = new Sample\Greeting("Universe");
 $greeting->hello();
 ?>
 --EXPECT--
-Hello World!
+Hello Universe!
