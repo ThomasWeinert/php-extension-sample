@@ -28,14 +28,20 @@ PHP_METHOD(sample_Greeting, __construct) {
 }
 
 PHP_METHOD(sample_Greeting, hello) {
-    zval rv, *name;
+    zval rv, *name, tmp;
 
     /*
       3. Read the property
     */
     name = zend_read_property(php_sample_greeting_class_entry, getThis(), ZEND_STRL("name"), 0, &rv);
 
-    php_printf("Hello %s!", Z_STRVAL_P(name));
+    /*
+      4. public properties can be modified from the outside, create a copy and force a string cast
+    */
+    ZVAL_COPY(&tmp, name);
+    convert_to_string(&tmp);
+
+    php_printf("Hello %s!", Z_STRVAL(tmp));
 }
 
 const zend_function_entry php_sample_greeting_class_functions[] = {
