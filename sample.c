@@ -10,7 +10,7 @@
 /*
   2. a variable for the entry in the class list
 */
-zend_class_entry *php_sample_class_entry;
+static zend_class_entry *php_sample_class_entry;
 
 /*
   3. a function list for the methods
