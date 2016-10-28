@@ -3,7 +3,7 @@
 #define SAMPLE_NS "sample"
 #define PHP_SAMPLE_CLASS_GREETING_NAME "Greeting"
 
-zend_class_entry *php_sample_greeting_class_entry;
+static zend_class_entry *php_sample_greeting_class_entry;
 
 PHP_METHOD(sample_Greeting, __construct) {
     zval *object;
