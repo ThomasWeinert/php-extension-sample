@@ -4,7 +4,7 @@
 
 #define PHP_SAMPLE_CLASS_NAME "SampleClass"
 
-zend_class_entry *php_sample_class_entry;
+static zend_class_entry *php_sample_class_entry;
 
 const zend_function_entry php_sample_class_functions[] = {
   PHP_FE_END
