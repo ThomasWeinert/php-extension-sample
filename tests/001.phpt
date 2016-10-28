@@ -1,5 +1,5 @@
 --TEST--
-Output SAMPLE\SAMPLE_INT constant and expect 42
+Output a greeting using Sample\Greeting::hello()
 --SKIPIF--
 <?php if (!extension_loaded("sample")) print "skip"; ?>
 --FILE--
