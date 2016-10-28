@@ -11,7 +11,7 @@
   2. a variable for the entry in the class list
   (Yes, interfaces are stored in the same list.)
 */
-zend_class_entry *php_sample_interface_entry;
+static zend_class_entry *php_sample_interface_entry;
 
 /*
   3. a function list for the methods
