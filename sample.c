@@ -5,8 +5,46 @@
 
 static zend_class_entry *php_sample_greeting_class_entry;
 
+/*
+ 1. Define a variable for the object handlers
+ */
+zend_object_handlers php_sample_greeting_handlers;
+
+/*
+ 2. Define a struct that contains the original zend object and the additional data
+*/
+typedef struct _php_sample_greeting_t {
+	 zval greeting;
+	 zend_object std;
+} php_sample_greeting_t;
+
+/*
+ 3. Define templates to fetch the struct from a zend object
+ */
+#define php_sample_greeting_from(o) ((php_sample_greeting_t*) ((char*) o - XtOffsetOf(php_sample_greeting_t, std)))
+#define php_sample_greeting_fetch(z) php_sample_greeting_from(Z_OBJ_P(z))
+
+/*
+ 4. A handler function to create the object
+*/
+zend_object* php_sample_greeting_create(zend_class_entry *ce) {
+    php_sample_greeting_t *s = (php_sample_greeting_t*) emalloc(sizeof(php_sample_greeting_t) + zend_object_properties_size(ce));
+    zend_object_std_init(&s->std, ce);
+    object_properties_init(&s->std, ce);
+    s->std.handlers = &php_sample_greeting_handlers;
+    return &s->std;
+}
+
+/*
+ 5. A handler function to free the object
+*/
+void php_sample_greeting_free(zend_object *o) {
+    php_sample_greeting_t *s = php_sample_greeting_from(o);
+    zval_dtor(&s->greeting);
+    zend_object_std_dtor(o);
+}
+
 PHP_METHOD(sample_Greeting, __construct) {
-    zval *object;
     char *name;
     size_t name_len;
 
@@ -15,33 +53,20 @@ PHP_METHOD(sample_Greeting, __construct) {
     ZEND_PARSE_PARAMETERS_END();
 
     /*
-      2. Update the property with the constructor argument
+      8. Store constructor argument in the struct
     */
-    object = getThis();
-    zend_update_property_stringl(
-        php_sample_greeting_class_entry,
-        object,
-        ZEND_STRL("name"),
-        name,
-        name_len
-    );
+    php_sample_greeting_t *sample = php_sample_greeting_fetch(getThis());
+    ZVAL_STRINGL(&sample->greeting, name, name_len);
 }
 
 PHP_METHOD(sample_Greeting, hello) {
     zval rv, *name, tmp;
 
     /*
-      3. Read the property
+      9. Read the stored name from the struct
     */
-    name = zend_read_property(php_sample_greeting_class_entry, getThis(), ZEND_STRL("name"), 0, &rv);
-
-    /*
-      4. public properties can be modified from the outside, create a copy and force a string cast
-    */
-    ZVAL_COPY(&tmp, name);
-    convert_to_string(&tmp);
-
-    php_printf("Hello %s!", Z_STRVAL(tmp));
+    php_sample_greeting_t *sample = php_sample_greeting_fetch(getThis());
+    php_printf("Hello %s!", Z_STRVAL(sample->greeting));
 }
 
 const zend_function_entry php_sample_greeting_class_functions[] = {
@@ -58,11 +83,16 @@ PHP_MINIT_FUNCTION(sample)
     );
     php_sample_greeting_class_entry = zend_register_internal_class(&ce TSRMLS_CC);
     /*
-      1. Declare the property
+      6. Set the create handler
+     */
+    php_sample_greeting_class_entry->create_object = php_sample_greeting_create;
+
+    /*
+      7. Copy the default handlers and add the free handler
     */
-    zend_declare_property_stringl(
-        php_sample_greeting_class_entry, ZEND_STRL("name"), ZEND_STRL("World"), ZEND_ACC_PUBLIC
-    );
+    memcpy(&php_sample_greeting_handlers, zend_get_std_object_handlers(), sizeof(zend_object_handlers));
+    php_sample_greeting_handlers.offset = XtOffsetOf(php_sample_greeting_t, std);
+    php_sample_greeting_handlers.free_obj = php_sample_greeting_free;
 }
 
 zend_module_entry sample_module_entry = {
