@@ -19,7 +19,7 @@ typedef struct _php_sample_greeting_t {
 } php_sample_greeting_t;
 
 /*
- 3. Define templates to fetch the struct from a zend object
+ 3. Define templates to fetch the struct from a zend object or zval
  */
 #define php_sample_greeting_from(o) ((php_sample_greeting_t*) ((char*) o - XtOffsetOf(php_sample_greeting_t, std)))
 #define php_sample_greeting_fetch(z) php_sample_greeting_from(Z_OBJ_P(z))
