@@ -14,14 +14,15 @@ zend_object_handlers php_sample_greeting_handlers;
  2. Define a struct that contains the original zend object and the additional data
 */
 typedef struct _php_sample_greeting_t {
-	 zval greeting;
+	 zval who;
 	 zend_object std;
 } php_sample_greeting_t;
 
 /*
  3. Define templates to fetch the struct from a zend object or zval
  */
-#define php_sample_greeting_from(o) ((php_sample_greeting_t*) ((char*) o - XtOffsetOf(php_sample_greeting_t, std)))
+#define php_sample_greeting_from(o) ((php_sample_greeting_t*) \
+    ((char*) o - XtOffsetOf(php_sample_greeting_t, std)))
 #define php_sample_greeting_fetch(z) php_sample_greeting_from(Z_OBJ_P(z))
 
 /*
@@ -40,7 +41,7 @@ zend_object* php_sample_greeting_create(zend_class_entry *ce) {
 */
 void php_sample_greeting_free(zend_object *o) {
     php_sample_greeting_t *s = php_sample_greeting_from(o);
-    zval_dtor(&s->greeting);
+    zval_dtor(&s->who);
     zend_object_std_dtor(o);
 }
 
@@ -56,7 +57,7 @@ PHP_METHOD(sample_Greeting, __construct) {
       8. Store constructor argument in the struct
     */
     php_sample_greeting_t *sample = php_sample_greeting_fetch(getThis());
-    ZVAL_STRINGL(&sample->greeting, name, name_len);
+    ZVAL_STRINGL(&sample->who, name, name_len);
 }
 
 PHP_METHOD(sample_Greeting, hello) {
@@ -66,7 +67,7 @@ PHP_METHOD(sample_Greeting, hello) {
       9. Read the stored name from the struct
     */
     php_sample_greeting_t *sample = php_sample_greeting_fetch(getThis());
-    php_printf("Hello %s!", Z_STRVAL(sample->greeting));
+    php_printf("Hello %s!", Z_STRVAL(sample->who));
 }
 
 const zend_function_entry php_sample_greeting_class_functions[] = {
