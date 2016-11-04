@@ -1,5 +1,5 @@
 --TEST--
-Check for sample presence
+Check for phpinfo output using reflection
 --SKIPIF--
 <?php if (!extension_loaded("sample")) print "skip"; ?>
 --FILE--
