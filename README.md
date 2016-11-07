@@ -9,4 +9,4 @@ The minimum version is PHP 7. I am not going to implement BC for older versions.
 
 ## class implements interface
 
-A sample class that implements the JsonSerializeable interface.
+A sample class that implements the JsonSerializable interface.
