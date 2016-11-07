@@ -1,10 +1,15 @@
 --TEST--
-Check for sample presence
+var_dump() an array returned by a function
 --SKIPIF--
 <?php if (!extension_loaded("sample")) print "skip"; ?>
 --FILE--
 <?php 
-echo \sample\answer();
+var_dump(\sample\answer());
 ?>
 --EXPECT--
-42
+array(2) {
+  ["greeting"]=>
+  string(9) "Hello %s!"
+  ["who"]=>
+  string(5) "World"
+}
