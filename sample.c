@@ -1,22 +1,21 @@
 #include "php_sample.h"
+#include "ext/json/php_json.h"
 
 #define SAMPLE_NS "sample"
-#define PHP_SAMPLE_CLASS_GREETING_NAME "Greeting"
+#define PHP_SAMPLE_CLASS_NAME "HelloWorld"
 
-static zend_class_entry *php_sample_greeting_class_entry;
+static zend_class_entry *php_sample_class_entry;
 
 /*
- 1. Implement the method
+ 2. Implement and register the method from the interface,
+   otherwise the class will be abstract
 */
-PHP_METHOD(sample_Greeting, hello) {
-    php_printf("Hello World!");
+PHP_METHOD(sample_Class, jsonSerialize) {
+    RETURN_STRING("Hello World!");
 }
 
-/*
-  2. register it in the function list for the class
-*/
-const zend_function_entry php_sample_greeting_class_functions[] = {
-    PHP_ME(sample_Greeting, hello, NULL, ZEND_ACC_PUBLIC)
+const zend_function_entry php_sample_class_functions[] = {
+    PHP_ME(sample_Class, jsonSerialize, NULL, ZEND_ACC_PUBLIC)
     PHP_FE_END
 };
 
@@ -24,9 +23,13 @@ PHP_MINIT_FUNCTION(sample)
 {
     zend_class_entry ce;
     INIT_NS_CLASS_ENTRY(
-      ce, SAMPLE_NS, PHP_SAMPLE_CLASS_GREETING_NAME, php_sample_greeting_class_functions
+      ce, SAMPLE_NS, PHP_SAMPLE_CLASS_NAME, php_sample_class_functions
     );
-    php_sample_greeting_class_entry = zend_register_internal_class(&ce TSRMLS_CC);
+    php_sample_class_entry = zend_register_internal_class(&ce TSRMLS_CC);
+    /*
+     1. define the interfaces implemented by the class the interfaces are a variadic argument
+     */
+    zend_class_implements(php_sample_class_entry, 1, php_json_serializable_ce);
 }
 
 zend_module_entry sample_module_entry = {

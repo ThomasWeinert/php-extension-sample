@@ -6,3 +6,7 @@ Each branch implements a single feature. Basically I add my tests as branches
 as I am learning and experimenting.
 
 The minimum version is PHP 7. I am not going to implement BC for older versions.
+
+## class implements interface
+
+A sample class that implements the JsonSerializeable interface.

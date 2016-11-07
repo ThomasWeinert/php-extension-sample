@@ -1,11 +1,10 @@
 --TEST--
-Output a greeting using Sample\Greeting::hello()
+Encode an instance of Sample\HelloWorld as Json
 --SKIPIF--
 <?php if (!extension_loaded("sample")) print "skip"; ?>
 --FILE--
 <?php
-$greeting = new Sample\Greeting();
-$greeting->hello();
+echo json_encode(new Sample\HelloWorld(), JSON_PRETTY_PRINT);
 ?>
 --EXPECT--
-Hello World!
+"Hello World!"
