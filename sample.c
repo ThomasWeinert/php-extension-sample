@@ -5,7 +5,7 @@
 PHP_FUNCTION(sample_getGreetings)
 {
     HashTable *names;
-    zval *greetings, *name;
+    zval greetings, *name;
 
     ZEND_PARSE_PARAMETERS_START(1, 1)
     	Z_PARAM_ARRAY_HT(names)
@@ -14,7 +14,7 @@ PHP_FUNCTION(sample_getGreetings)
     /*
       1. initialize an array for the result
     */
-    array_init(greetings);
+    array_init(&greetings);
 
     ZEND_HASH_FOREACH_VAL(names, name) {
         convert_to_string(name);
@@ -23,18 +23,18 @@ PHP_FUNCTION(sample_getGreetings)
         /*
           2. add greeting to list
         */
-        add_next_index_str(greetings, greeting);
+        add_next_index_str(&greetings, greeting);
     } ZEND_HASH_FOREACH_END();
 
     /*
      3. return the greetings
     */
-    RETURN_ARR(Z_ARRVAL_P(greetings));
+    RETURN_ARR(Z_ARRVAL(greetings));
 
     /*
      4. cleanup the array
     */
-    array_free(greetings);
+    array_free(&greetings);
 }
 
 const zend_function_entry php_sample_functions[] = {
