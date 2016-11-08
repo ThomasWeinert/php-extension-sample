@@ -30,11 +30,6 @@ PHP_FUNCTION(sample_getGreetings)
      3. return the greetings
     */
     RETURN_ARR(Z_ARRVAL(greetings));
-
-    /*
-     4. cleanup the array
-    */
-    array_free(&greetings);
 }
 
 const zend_function_entry php_sample_functions[] = {
