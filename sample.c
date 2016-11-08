@@ -9,7 +9,6 @@ PHP_FUNCTION(sample_hello_names)
   */
   HashTable *names;
   zval *entry;
-  zend_string *name;
 
   /*
     2. parse parameters using FAST ZPP Api
@@ -23,7 +22,7 @@ PHP_FUNCTION(sample_hello_names)
     3. use ZEND_HASH_FOREACH_* template to iterate the array
    */
   ZEND_HASH_FOREACH_VAL(names, entry) {
-      name = zval_get_string(entry);
+      zend_string *name = zval_get_string(entry);
       php_printf("Hello %s!\n", ZSTR_VAL(name));
       zend_string_release(name);
 
