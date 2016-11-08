@@ -7,4 +7,7 @@ Encode an instance of Sample\HelloWorld as Json
 echo json_encode(new Sample\HelloWorld(), JSON_PRETTY_PRINT);
 ?>
 --EXPECT--
-"Hello World!"
+{
+    "greeting": "Hello World!",
+    "answer": 42
+}

@@ -11,7 +11,15 @@ static zend_class_entry *php_sample_class_entry;
    otherwise the class will be abstract
 */
 PHP_METHOD(sample_Class, jsonSerialize) {
-    RETURN_STRING("Hello World!");
+    zval array;
+
+    array_init(&array);
+
+    add_assoc_str(&array, "greeting", zend_string_init(ZEND_STRL("Hello World!"), 0));
+    add_assoc_long(&array, "answer", 42);
+
+    RETURN_ARR(Z_ARRVAL(array));
+    array_free(&array);
 }
 
 const zend_function_entry php_sample_class_functions[] = {
