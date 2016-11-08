@@ -4,24 +4,24 @@
 
 PHP_FUNCTION(sample_getGreetingParts)
 {
-    zval *array;
+    zval array;
 
     /*
      1. initialize the array
     */
-    array_init(array);
+    array_init(&array);
 
     /*
      2. add elements with named key
     */
-    add_assoc_str(array, "greeting", zend_string_init(ZEND_STRL("Hello %s!"), 0));
-    add_assoc_str(array, "who", zend_string_init(ZEND_STRL("World"), 0));
+    add_assoc_str(&array, "greeting", zend_string_init(ZEND_STRL("Hello %s!"), 0));
+    add_assoc_str(&array, "who", zend_string_init(ZEND_STRL("World"), 0));
 
     /*
       3. return and cleanup
     */
-    RETURN_ARR(Z_ARRVAL_P(array));
-    array_free(array);
+    RETURN_ARR(Z_ARRVAL(array));
+    array_free(&array);
 }
 
 const zend_function_entry php_sample_functions[] = {
