@@ -4,7 +4,7 @@ var_dump() an array returned by a function
 <?php if (!extension_loaded("sample")) print "skip"; ?>
 --FILE--
 <?php 
-var_dump(\sample\getGeetingParts());
+var_dump(\sample\getGreetingParts());
 ?>
 --EXPECT--
 array(2) {

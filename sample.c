@@ -2,7 +2,7 @@
 
 #define SAMPLE_NS "sample"
 
-PHP_FUNCTION(sample_getGeetingParts)
+PHP_FUNCTION(sample_getGreetingParts)
 {
   zval array;
 
@@ -25,7 +25,7 @@ PHP_FUNCTION(sample_getGeetingParts)
 }
 
 const zend_function_entry php_sample_functions[] = {
-  ZEND_NS_NAMED_FE(SAMPLE_NS, getGeetingParts, ZEND_FN(sample_getGeetingParts), NULL)
+  ZEND_NS_NAMED_FE(SAMPLE_NS, getGreetingParts, ZEND_FN(sample_getGreetingParts), NULL)
   PHP_FE_END
 };
 
