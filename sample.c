@@ -17,8 +17,7 @@ PHP_FUNCTION(sample_getGreetings)
     array_init(return_value);
 
     ZEND_HASH_FOREACH_VAL(names, name) {
-        convert_to_string(name);
-        zend_string *greeting = strpprintf(0, "Hello %s!", Z_STRVAL_P(name));
+        zend_string *greeting = strpprintf(0, "Hello %s!", ZSTR_VAL(zval_get_string(name)));
 
         /*
           2. add greeting to list
