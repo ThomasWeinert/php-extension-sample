@@ -2,21 +2,30 @@
 
 #define SAMPLE_NS "sample"
 
-PHP_FUNCTION(sample_answer)
+PHP_FUNCTION(sample_getGeetingParts)
 {
   zval array;
 
+  /*
+   1. initialize the array
+  */
   array_init(&array);
 
+  /*
+   2. add elements with named key
+  */
   add_assoc_str(&array, "greeting", zend_string_init(ZEND_STRL("Hello %s!"), 0));
   add_assoc_str(&array, "who", zend_string_init(ZEND_STRL("World"), 0));
 
+  /*
+    3. return and cleanup
+  */
   RETURN_ARR(Z_ARRVAL(array));
   array_free(&array);
 }
 
 const zend_function_entry php_sample_functions[] = {
-  ZEND_NS_NAMED_FE(SAMPLE_NS, answer, ZEND_FN(sample_answer), NULL)
+  ZEND_NS_NAMED_FE(SAMPLE_NS, getGeetingParts, ZEND_FN(sample_getGeetingParts), NULL)
   PHP_FE_END
 };
 
