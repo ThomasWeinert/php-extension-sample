@@ -10,7 +10,7 @@ PHP_FUNCTION(sample_answer)
   ZVAL_STRING(&values[0], "Hello %s!");
   ZVAL_STRING(&values[1], "World");
 
-	array_init(&array);
+  array_init(&array);
   ht = Z_ARRVAL(array);
 
   zend_hash_str_add(ht, "greeting", sizeof("greeting")-1, &values[0]);
