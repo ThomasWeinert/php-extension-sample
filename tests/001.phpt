@@ -4,12 +4,14 @@ var_dump() an array returned by a function
 <?php if (!extension_loaded("sample")) print "skip"; ?>
 --FILE--
 <?php 
-var_dump(\sample\answer());
+var_dump(\sample\getGreetings(['World', "Universe", 42]));
 ?>
 --EXPECT--
-array(2) {
-  ["greeting"]=>
-  string(9) "Hello %s!"
-  ["who"]=>
-  string(5) "World"
+array(3) {
+  [0]=>
+  string(12) "Hello World!"
+  [1]=>
+  string(15) "Hello Universe!"
+  [2]=>
+  string(9) "Hello 42!"
 }
