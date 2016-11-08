@@ -4,19 +4,14 @@
 
 PHP_FUNCTION(sample_answer)
 {
-  HashTable *ht;
-  zval array, values[2];
-
-  ZVAL_STRING(&values[0], "Hello %s!");
-  ZVAL_STRING(&values[1], "World");
+  zval array;
 
   array_init(&array);
-  ht = Z_ARRVAL(array);
 
-  zend_hash_str_add(ht, "greeting", sizeof("greeting")-1, &values[0]);
-  zend_hash_str_add(ht, "who", sizeof("who")-1, &values[1]);
+  add_assoc_str(&array, "greeting", zend_string_init(ZEND_STRL("Hello %s!"), 0));
+  add_assoc_str(&array, "who", zend_string_init(ZEND_STRL("World"), 0));
 
-  RETURN_ARR(ht);
+  RETURN_ARR(Z_ARRVAL(array));
   array_free(&array);
 }
 
