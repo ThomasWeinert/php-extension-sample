@@ -4,10 +4,13 @@
 
 PHP_FUNCTION(sample_getGreetingParts)
 {
+    /*
+     1. initialize return_value as array
+    */
     array_init(return_value);
 
     /*
-     1. add elements with named key
+     2. add elements with named key
     */
     add_assoc_str(return_value, "greeting", zend_string_init("Hello %s!", strlen("Hello %s!"), 0));
     add_assoc_str(return_value, "who", zend_string_init("World", strlen("World"), 0));
