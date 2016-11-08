@@ -35,7 +35,7 @@ PHP_MINIT_FUNCTION(sample)
     );
     php_sample_class_entry = zend_register_internal_class(&ce TSRMLS_CC);
     /*
-     1. define the interfaces implemented by the class the interfaces are a variadic argument
+     1. define the interfaces implemented by the class. The interfaces are a variadic argument.
      */
     zend_class_implements(php_sample_class_entry, 1, php_json_serializable_ce);
 }
