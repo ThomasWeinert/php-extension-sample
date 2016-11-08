@@ -19,7 +19,6 @@ PHP_METHOD(sample_Class, jsonSerialize) {
     add_assoc_long(&array, "answer", 42);
 
     RETURN_ARR(Z_ARRVAL(array));
-    array_free(&array);
 }
 
 const zend_function_entry php_sample_class_functions[] = {
