@@ -4,7 +4,11 @@ Call function with string argument
 <?php if (!extension_loaded("sample")) print "skip"; ?>
 --FILE--
 <?php 
-echo \sample\hello('Universe');
+echo \sample\hello(
+  function() {
+    return 'Universe';
+  }
+);
 ?>
 --EXPECT--
 Hello Universe!
