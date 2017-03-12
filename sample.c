@@ -1,38 +1,54 @@
 #include "php_sample.h"
 
 /*
- 1. Define namespace in php_sample.h
+ 1. & 2. see php_sample.h
 */
 
 /*
- 2. implement a php function
-*/
-PHP_FUNCTION(sample_hello_world)
+ 3. Declare global module variables
+ */
+ZEND_DECLARE_MODULE_GLOBALS(sample)
+
+PHP_FUNCTION(sample_get_value)
 {
-	php_printf("Hello World!\n");
+    /*
+     6. get the current value
+     */
+    long value;
+    value = SAMPLE_G(sample_value);
+
+	php_printf("Current value: %d\n", value);
+
+    /*
+     7. set the value
+     */
+	SAMPLE_G(sample_value) = (value == 42) ? 21 : 42;
 }
 
 /*
- 3. define a list for your extension functions
-*/
+ 4. Add a request initialization function, you might need a
+ request shutdown function for more complex variables.
+ */
+PHP_RINIT_FUNCTION(sample)
+{
+	SAMPLE_G(sample_value) = 21;
+}
+
 const zend_function_entry php_sample_functions[] = {
-	/*
-	 4. register the function in the namespace
-	 */
-	ZEND_NS_NAMED_FE(PHP_SAMPLE_EXT_NS, helloWorld, ZEND_FN(sample_hello_world), NULL)
+	ZEND_NS_NAMED_FE(PHP_SAMPLE_EXT_NS, getValue, ZEND_FN(sample_get_value), NULL)
 	PHP_FE_END
 };
 
 zend_module_entry sample_module_entry = {
 	STANDARD_MODULE_HEADER,
 	PHP_SAMPLE_EXT_NAME,
-	/*
-	 5. add the functions to the module entry
-	 */
 	php_sample_functions, /* Functions */
 	NULL, /* MINIT */
 	NULL, /* MSHUTDOWN */
-	NULL, /* RINIT */
+	/*
+	 5. add request initialization function to the module entry
+	 */
+	PHP_RINIT(sample), /* RINIT */
 	NULL, /* RSHUTDOWN */
 	NULL, /* MINFO */
 	PHP_SAMPLE_EXT_VERSION,
