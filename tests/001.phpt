@@ -1,5 +1,5 @@
 --TEST--
-Check for sample presence
+Catch a thrown SPL exception (\LogiException).
 --SKIPIF--
 <?php if (!extension_loaded("sample")) print "skip"; ?>
 --FILE--
