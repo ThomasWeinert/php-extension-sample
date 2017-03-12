@@ -1,5 +1,5 @@
 --TEST--
-Check for sample presence
+Create and use sample resource
 --SKIPIF--
 <?php if (!extension_loaded("sample")) print "skip"; ?>
 --FILE--
