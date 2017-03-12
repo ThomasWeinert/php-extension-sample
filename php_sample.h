@@ -1,8 +1,13 @@
 #ifndef PHP_SAMPLE_H
 #define PHP_SAMPLE_H
 
-#define PHP_SAMPLE_EXTNAME  "sample"
-#define PHP_SAMPLE_EXTVER   "1.0"
+#define PHP_SAMPLE_EXT_NAME  "sample"
+#define PHP_SAMPLE_EXT_VERSION   "1.0"
+
+/*
+ 1. define the namespace for your extension
+*/
+#define PHP_SAMPLE_EXT_NS "sample"
 
 #ifdef HAVE_CONFIG_H
 #include "config.h"
