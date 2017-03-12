@@ -1,7 +1,5 @@
 #include "php_sample.h"
 
-#define SAMPLE_NS "sample"
-
 PHP_FUNCTION(sample_hello_names)
 {
   /*

@@ -4,6 +4,8 @@
 #define PHP_SAMPLE_EXTNAME  "sample"
 #define PHP_SAMPLE_EXTVER   "1.0"
 
+#define SAMPLE_NS "sample"
+
 #ifdef HAVE_CONFIG_H
 #include "config.h"
 #endif /* HAVE_CONFIG_H */
