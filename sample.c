@@ -1,7 +1,7 @@
 #include "php_sample.h"
 
 /*
-  1. Implement MINFO function
+	1. Implement MINFO function
  */
 PHP_MINFO_FUNCTION(sample)
 {
@@ -12,19 +12,19 @@ PHP_MINFO_FUNCTION(sample)
 }
 
 zend_module_entry sample_module_entry = {
-  STANDARD_MODULE_HEADER,
-  PHP_SAMPLE_EXTNAME,
-  NULL, /* Functions */
-  NULL, /* MINIT */
-  NULL, /* MSHUTDOWN */
-  NULL, /* RINIT */
-  NULL, /* RSHUTDOWN */
-  /*
-    2. provide MINFO function
-  */
-  PHP_MINFO(sample), /* MINFO */
-  PHP_SAMPLE_EXTVER,
-  STANDARD_MODULE_PROPERTIES
+	STANDARD_MODULE_HEADER,
+	PHP_SAMPLE_EXT_NAME,
+	NULL, /* Functions */
+	NULL, /* MINIT */
+	NULL, /* MSHUTDOWN */
+	NULL, /* RINIT */
+	NULL, /* RSHUTDOWN */
+	/*
+	 2. provide MINFO function
+	 */
+	PHP_MINFO(sample), /* MINFO */
+	PHP_SAMPLE_EXT_VERSION,
+	STANDARD_MODULE_PROPERTIES
 };
 
 #ifdef COMPILE_DL_SAMPLE
