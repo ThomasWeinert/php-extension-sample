@@ -1,5 +1,5 @@
 --TEST--
-Call function with string argument
+Call function with different (mixed) argument types
 --SKIPIF--
 <?php if (!extension_loaded("sample")) print "skip"; ?>
 --FILE--
