@@ -28,20 +28,20 @@ PHP_FUNCTION(sample_hello_names)
 }
 
 const zend_function_entry php_sample_functions[] = {
-	ZEND_NS_NAMED_FE(SAMPLE_NS, hello, ZEND_FN(sample_hello_names), NULL)
+	ZEND_NS_NAMED_FE(PHP_SAMPLE_EXT_NS, hello, ZEND_FN(sample_hello_names), NULL)
 	PHP_FE_END
 };
 
 zend_module_entry sample_module_entry = {
 	STANDARD_MODULE_HEADER,
-	PHP_SAMPLE_EXTNAME,
+	PHP_SAMPLE_EXT_NAME,
 	php_sample_functions, /* Functions */
 	NULL, /* MINIT */
 	NULL, /* MSHUTDOWN */
 	NULL, /* RINIT */
 	NULL, /* RSHUTDOWN */
 	NULL, /* MINFO */
-	PHP_SAMPLE_EXTVER,
+	PHP_SAMPLE_EXT_VERSION,
 	STANDARD_MODULE_PROPERTIES
 };
 
