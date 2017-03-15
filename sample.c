@@ -16,9 +16,7 @@ PHP_FUNCTION(sample_hello_name)
 		Z_PARAM_STRING(name, name_len)
 	ZEND_PARSE_PARAMETERS_END();
 
-	php_printf("Hello ");
-	PHPWRITE(name, name_len);
-	php_printf("!\n");
+	php_printf("Hello %s!", name, name_len);
 }
 
 const zend_function_entry php_sample_functions[] = {
