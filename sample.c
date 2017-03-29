@@ -1,34 +1,37 @@
 #include "php_sample.h"
 
-/*
- 1. Define namespace in php_sample.h
-*/
-
-/*
- 2. implement a php function
-*/
-PHP_FUNCTION(sample_hello_world)
+PHP_FUNCTION(sample_greet)
 {
-	php_printf("Hello World!\n");
+    zval fname, params[1], *greeting;
+    ZVAL_STRING(&fname, "do");
+    ZVAL_STRING(&params[0], "World");
+
+	ZEND_PARSE_PARAMETERS_START(1, 1)
+    	Z_PARAM_OBJECT(greeting)
+	ZEND_PARSE_PARAMETERS_END();
+
+    if (call_user_function(NULL, greeting, &fname, return_value, 1, params TSRMLS_CC) == FAILURE) {
+    	php_error_docref(
+			NULL TSRMLS_CC,
+			E_ERROR,
+  			"Unable to call  method do() on argument"
+    	);
+
+    	RETVAL_FALSE;
+    }
+
+    zval_dtor(&fname);
+    zval_dtor(&params[0]);
 }
 
-/*
- 3. define a list for your extension functions
-*/
 const zend_function_entry php_sample_functions[] = {
-	/*
-	 4. register the function in the namespace
-	 */
-	ZEND_NS_NAMED_FE(PHP_SAMPLE_EXT_NS, helloWorld, ZEND_FN(sample_hello_world), NULL)
+	ZEND_NS_NAMED_FE(PHP_SAMPLE_EXT_NS, greet, ZEND_FN(sample_greet), NULL)
 	PHP_FE_END
 };
 
 zend_module_entry sample_module_entry = {
 	STANDARD_MODULE_HEADER,
 	PHP_SAMPLE_EXT_NAME,
-	/*
-	 5. add the functions to the module entry
-	 */
 	php_sample_functions, /* Functions */
 	NULL, /* MINIT */
 	NULL, /* MSHUTDOWN */
