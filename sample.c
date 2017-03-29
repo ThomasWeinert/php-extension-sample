@@ -2,26 +2,26 @@
 
 PHP_FUNCTION(sample_greet)
 {
-    zval fname, params[1], *greeting;
-    ZVAL_STRING(&fname, "do");
-    ZVAL_STRING(&params[0], "World");
+	zval fname, params[1], *greeting;
+	ZVAL_STRING(&fname, "do");
+	ZVAL_STRING(&params[0], "World");
 
 	ZEND_PARSE_PARAMETERS_START(1, 1)
-    	Z_PARAM_OBJECT(greeting)
+		Z_PARAM_OBJECT(greeting)
 	ZEND_PARSE_PARAMETERS_END();
 
-    if (call_user_function(NULL, greeting, &fname, return_value, 1, params TSRMLS_CC) == FAILURE) {
-    	php_error_docref(
+	if (call_user_function(NULL, greeting, &fname, return_value, 1, params TSRMLS_CC) == FAILURE) {
+		php_error_docref(
 			NULL TSRMLS_CC,
 			E_ERROR,
-  			"Unable to call  method do() on argument"
-    	);
+			"Unable to call  method do() on argument"
+		);
 
-    	RETVAL_FALSE;
-    }
+		RETVAL_FALSE;
+	}
 
-    zval_dtor(&fname);
-    zval_dtor(&params[0]);
+	zval_dtor(&fname);
+	zval_dtor(&params[0]);
 }
 
 const zend_function_entry php_sample_functions[] = {
