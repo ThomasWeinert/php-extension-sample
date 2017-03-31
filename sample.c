@@ -10,11 +10,15 @@ PHP_FUNCTION(sample_greet)
 		Z_PARAM_OBJECT(greeting)
 	ZEND_PARSE_PARAMETERS_END();
 
-	if (call_user_function(NULL, greeting, &fname, return_value, 1, params TSRMLS_CC) == FAILURE) {
+	if (
+		call_user_function(
+			NULL, greeting, &fname, return_value, 1, params TSRMLS_CC
+		) == FAILURE
+	) {
 		php_error_docref(
 			NULL TSRMLS_CC,
 			E_ERROR,
-			"Unable to call  method do() on argument"
+			"Unable to call method do() on object argument"
 		);
 
 		RETVAL_FALSE;

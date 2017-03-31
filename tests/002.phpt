@@ -4,14 +4,7 @@ Call method "do" on object argument without that method.
 <?php if (!extension_loaded("sample")) print "skip"; ?>
 --FILE--
 <?php
-class Hello {
-}
-
-try {
-  \sample\greet(new Hello("World"));
-} catch (\Throwable $e) {
-  var_dump($e);
-}
+\sample\greet(new stdClass);
 ?>
---EXPECT--
-Warning: sample\greet(): Unable to call  method do() on argument in /home/vagrant/data/ext/sample/tests/002.php on line 5
+--EXPECTF--
+Fatal error: sample\greet(): Unable to call method do() on object argument in %s002.php on line %d
