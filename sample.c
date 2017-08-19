@@ -2,22 +2,13 @@
 
 PHP_FUNCTION(sample_answer)
 {
-	HashTable *properties;
-
-	zend_string *key = zend_string_init("Greeting", strlen("Greeting"), 0);
-	zval *element;
-
-	properties = emalloc(sizeof(HashTable));
-    zend_hash_init(properties, 0, NULL, ZVAL_PTR_DTOR, 0);
-
-    ZVAL_NEW_STR(&element, zend_string_init("Hello World!", strlen("Hello World!"), 0));
-	zend_hash_add_new(properties, key, element);
-
-	object_and_properties_init(return_value, zend_standard_class_def, properties);
-
-	zend_string_release(key);
-	zend_hash_destroy(properties);
-	efree(properties);
+	object_init_ex(return_value, zend_standard_class_def);
+	zend_update_property_stringl(
+		zend_standard_class_def,
+		return_value,
+		ZEND_STRL("greeting"),
+		ZEND_STRL("Hello World!")
+	);
 }
 
 const zend_function_entry php_sample_functions[] = {

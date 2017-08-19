@@ -7,5 +7,7 @@ Return an stdClass instance with some properties set.
 var_dump(\sample\answer());
 ?>
 --EXPECT--
-object(stdClass)#1 (0) {
+object(stdClass)#1 (1) {
+  ["greeting"]=>
+  string(12) "Hello World!"
 }
