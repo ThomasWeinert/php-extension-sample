@@ -1,13 +1,11 @@
 --TEST--
-Return an stdClass instance with some properties set.
+Return an object after calling its constructor.
 --SKIPIF--
 <?php if (!extension_loaded("sample")) print "skip"; ?>
 --FILE--
 <?php 
-var_dump(\sample\answer());
+$greeting = \sample\getGreeting();
+$greeting->hello();
 ?>
 --EXPECT--
-object(stdClass)#1 (1) {
-  ["greeting"]=>
-  string(12) "Hello World!"
-}
+Hello Universe!
