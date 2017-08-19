@@ -1,4 +1,7 @@
 #include "php_sample.h"
+/*
+   1. include helper function to call functions
+ */
 #include "Zend/zend_interfaces.h"
 
 #define SAMPLE_NS "sample"
@@ -6,26 +9,30 @@
 
 static zend_class_entry *php_sample_greeting_class_entry;
 
-
 PHP_FUNCTION(sample_getGreeting)
 {
-	zval arg1;
+	zval name;
 	/*
-	  1. initialize return_value variable as an object using
+	  2. initialize return_value variable as an object using
 		 the zend class entry
 	 */
 	object_init_ex(return_value, php_sample_greeting_class_entry);
 
-	ZVAL_STRINGL(&arg1, "Universe", strlen("Universe"));
-	zend_call_method_with_1_params(
+	ZVAL_STRINGL(&name, "Universe", strlen("Universe"));
+
+	/*
+	  3. call constructor on that object, providing the argument
+	*/
+    zend_call_method_with_1_params(
 		return_value,
 		php_sample_greeting_class_entry,
 		&php_sample_greeting_class_entry->constructor,
 		"__construct",
 		NULL,
-		&arg1
+		&name
 	);
-	zval_ptr_dtor(&arg1);
+
+	zval_ptr_dtor(&name);
 }
 
 const zend_function_entry php_sample_functions[] = {
