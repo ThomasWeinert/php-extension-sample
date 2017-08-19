@@ -1,10 +1,11 @@
 --TEST--
-Check for sample presence
+Return an stdClass instance with some properties set.
 --SKIPIF--
 <?php if (!extension_loaded("sample")) print "skip"; ?>
 --FILE--
 <?php 
-echo \sample\answer();
+var_dump(\sample\answer());
 ?>
 --EXPECT--
-42
+object(stdClass)#1 (0) {
+}

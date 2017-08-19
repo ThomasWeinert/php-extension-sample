@@ -2,27 +2,22 @@
 
 PHP_FUNCTION(sample_answer)
 {
-	/*
-	 1. Use a type specific template to return a value
-		RETURN_BOOL(b)
-		RETURN_NULL()
-		RETURN_LONG(l)
-		RETURN_DOUBLE(d)
-		RETURN_STR(s)
-		RETURN_INTERNED_STR(s)
-		RETURN_NEW_STR(s)
-		RETURN_STR_COPY(s)
-		RETURN_STRING(s)
-		RETURN_STRINGL(s, l)
-		RETURN_EMPTY_STRING()
-		RETURN_RES(r)
-		RETURN_ARR(r)
-		RETURN_OBJ(r)
-		RETURN_ZVAL(zv, copy, dtor)
-		RETURN_FALSE
-		RETURN_TRUE
-	 */
-	RETURN_LONG(42);
+	HashTable *properties;
+
+	zend_string *key = zend_string_init("Greeting", strlen("Greeting"), 0);
+	zval *element;
+
+	properties = emalloc(sizeof(HashTable));
+    zend_hash_init(properties, 0, NULL, ZVAL_PTR_DTOR, 0);
+
+    ZVAL_NEW_STR(&element, zend_string_init("Hello World!", strlen("Hello World!"), 0));
+	zend_hash_add_new(properties, key, element);
+
+	object_and_properties_init(return_value, zend_standard_class_def, properties);
+
+	zend_string_release(key);
+	zend_hash_destroy(properties);
+	efree(properties);
 }
 
 const zend_function_entry php_sample_functions[] = {
