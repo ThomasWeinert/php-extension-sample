@@ -2,7 +2,15 @@
 
 PHP_FUNCTION(sample_answer)
 {
+	/*
+	  1. initialize return_value variable as an object using
+		 the zend class entry
+	 */
 	object_init_ex(return_value, zend_standard_class_def);
+
+	/*
+	  2. update the property
+	 */
 	zend_update_property_stringl(
 		zend_standard_class_def,
 		return_value,
