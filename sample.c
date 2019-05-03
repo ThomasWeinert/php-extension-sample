@@ -3,8 +3,10 @@
 /*
  1. define the arguments *_EX allows to define the number of required arguments in the third parameter
 
- ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO(name, type, class_name, allow_null)
- ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(name, return_reference, required_num_args, type, class_name, allow_null)
+ ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO(name, allow_null)
+ ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(name, return_reference, required_num_args, class_name, allow_null)
+ ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO(name, class_name, allow_null)
+ ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(name, return_reference, required_num_args, type, allow_null)
  */
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(ArgInfo_sample_multiply, 0, 1, IS_LONG, NULL, 0)
 	ZEND_ARG_TYPE_INFO(0, first, IS_LONG, 0)
