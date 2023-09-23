@@ -8,6 +8,9 @@
 /*
  2. throw the exception
  */
+ZEND_BEGIN_ARG_INFO(ArgInfo_sample_trigger_exception, 0)
+ZEND_END_ARG_INFO()
+
 PHP_FUNCTION(sample_trigger_exception)
 {
 	zend_throw_exception_ex(
@@ -16,7 +19,7 @@ PHP_FUNCTION(sample_trigger_exception)
 }
 
 const zend_function_entry php_sample_functions[] = {
-	ZEND_NS_NAMED_FE(PHP_SAMPLE_EXT_NS, trigger, ZEND_FN(sample_trigger_exception), NULL)
+	ZEND_NS_NAMED_FE(PHP_SAMPLE_EXT_NS, trigger, ZEND_FN(sample_trigger_exception), ArgInfo_sample_trigger_exception)
 	PHP_FE_END
 };
 
