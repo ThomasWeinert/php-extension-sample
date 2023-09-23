@@ -11,24 +11,30 @@
 static zend_class_entry *php_sample_class_entry;
 
 /*
- 3. a function list for the methods
+ 3. Define argument information for the method
+ */
+ZEND_BEGIN_ARG_INFO_EX(arginfo_sample_Class_sampleMethod, 0, 0, 0)
+ZEND_END_ARG_INFO()
+
+/*
+ 4. Define a function list for the methods
  */
 const zend_function_entry php_sample_class_functions[] = {
-	PHP_ABSTRACT_ME(sample_Class, sampleMethod, NULL)
+	PHP_ABSTRACT_ME(sample_Class, sampleMethod, arginfo_sample_Class_sampleMethod)
 	PHP_FE_END
 };
 
 PHP_MINIT_FUNCTION(sample)
 {
 	/*
-	 4. Initialize and register the class
+	 5. Initialize and register the class
 	 */
 	zend_class_entry ce;
 
 	INIT_NS_CLASS_ENTRY(
 		ce, PHP_SAMPLE_EXT_NS, PHP_SAMPLE_CLASS_NAME, php_sample_class_functions
 	);
-	php_sample_class_entry = zend_register_internal_class(&ce TSRMLS_CC);
+	php_sample_class_entry = zend_register_internal_class(&ce);
 }
 
 zend_module_entry sample_module_entry = {
