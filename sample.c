@@ -5,6 +5,11 @@
 
 static zend_class_entry *php_sample_greeting_class_entry;
 
+
+ZEND_BEGIN_ARG_INFO(ArgInfo_sample_Greeting_construct, 0)
+  ZEND_ARG_TYPE_INFO(0, name, IS_STRING, 0)
+ZEND_END_ARG_INFO()
+
 PHP_METHOD(sample_Greeting, __construct) {
 	zval *object;
 	char *name;
@@ -20,12 +25,16 @@ PHP_METHOD(sample_Greeting, __construct) {
 	object = getThis();
 	zend_update_property_stringl(
 		php_sample_greeting_class_entry,
-		object,
+
+        Z_OBJ_P(object),
 		ZEND_STRL("name"),
 		name,
 		name_len
 	);
 }
+
+ZEND_BEGIN_ARG_INFO(ArgInfo_sample_Greeting_hello, 0)
+ZEND_END_ARG_INFO()
 
 PHP_METHOD(sample_Greeting, hello) {
 	zval rv, *name, tmp;
@@ -33,7 +42,7 @@ PHP_METHOD(sample_Greeting, hello) {
 	/*
 	 3. Read the property
 	 */
-	name = zend_read_property(php_sample_greeting_class_entry, getThis(), ZEND_STRL("name"), 0, &rv);
+	name = zend_read_property(php_sample_greeting_class_entry, Z_OBJ_P(getThis()), ZEND_STRL("name"), 0, &rv);
 
 	/*
 	 4. public properties can be modified from the outside, create a copy and force a string cast
@@ -45,8 +54,8 @@ PHP_METHOD(sample_Greeting, hello) {
 }
 
 const zend_function_entry php_sample_greeting_class_functions[] = {
-	PHP_ME(sample_Greeting, __construct, NULL, ZEND_ACC_PUBLIC | ZEND_ACC_CTOR)
-	PHP_ME(sample_Greeting, hello, NULL, ZEND_ACC_PUBLIC)
+	PHP_ME(sample_Greeting, __construct, ArgInfo_sample_Greeting_construct, ZEND_ACC_PUBLIC | ZEND_ACC_CTOR)
+	PHP_ME(sample_Greeting, hello, ArgInfo_sample_Greeting_hello, ZEND_ACC_PUBLIC)
 	PHP_FE_END
 };
 
@@ -56,7 +65,7 @@ PHP_MINIT_FUNCTION(sample)
 	INIT_NS_CLASS_ENTRY(
 		ce, PHP_SAMPLE_EXT_NS, PHP_SAMPLE_CLASS_GREETING_NAME, php_sample_greeting_class_functions
 	);
-	php_sample_greeting_class_entry = zend_register_internal_class(&ce TSRMLS_CC);
+	php_sample_greeting_class_entry = zend_register_internal_class(&ce);
 	/*
 	 1. Declare the property
 	 */
