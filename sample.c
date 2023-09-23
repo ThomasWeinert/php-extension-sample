@@ -14,7 +14,7 @@ PHP_MINIT_FUNCTION(sample)
 	INIT_NS_CLASS_ENTRY(
 		ce, PHP_SAMPLE_EXT_NS, PHP_SAMPLE_CLASS_NAME, php_sample_class_functions
 	);
-	php_sample_class_entry = zend_register_internal_class(&ce TSRMLS_CC);
+	php_sample_class_entry = zend_register_internal_class(&ce);
 
 	/*
 	 1. Declare class constant
