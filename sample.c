@@ -7,6 +7,9 @@ static zend_class_entry *php_sample_greeting_class_entry;
 /*
  1. Implement the method
 */
+ZEND_BEGIN_ARG_INFO_EX(ArgInfo_sample_Greeting_hello, 0, 0, 0)
+ZEND_END_ARG_INFO()
+
 PHP_METHOD(sample_Greeting, hello) {
 	php_printf("Hello World!");
 }
@@ -15,7 +18,7 @@ PHP_METHOD(sample_Greeting, hello) {
  2. register it in the function list for the class
 */
 const zend_function_entry php_sample_greeting_class_functions[] = {
-	PHP_ME(sample_Greeting, hello, NULL, ZEND_ACC_PUBLIC)
+	PHP_ME(sample_Greeting, hello, ArgInfo_sample_Greeting_hello, ZEND_ACC_PUBLIC)
 	PHP_FE_END
 };
 
@@ -25,7 +28,7 @@ PHP_MINIT_FUNCTION(sample)
 	INIT_NS_CLASS_ENTRY(
 		ce, PHP_SAMPLE_EXT_NS, PHP_SAMPLE_CLASS_GREETING_NAME, php_sample_greeting_class_functions
 	);
-	php_sample_greeting_class_entry = zend_register_internal_class(&ce TSRMLS_CC);
+	php_sample_greeting_class_entry = zend_register_internal_class(&ce);
 }
 
 zend_module_entry sample_module_entry = {
