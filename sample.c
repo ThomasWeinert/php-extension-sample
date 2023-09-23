@@ -12,11 +12,11 @@ zend_class_entry *sample_exception;
 /*
  3. implement a function to initialize the exception class
 */
-void sample_init_exception(TSRMLS_D) {
+void sample_init_exception() {
 	zend_class_entry e;
 
 	INIT_NS_CLASS_ENTRY(e, PHP_SAMPLE_EXT_NS, "ExceptionName", NULL);
-	sample_exception = zend_register_internal_class_ex(&e, (zend_class_entry*)zend_exception_get_default(TSRMLS_C));
+	sample_exception = zend_register_internal_class_ex(&e, (zend_class_entry*)zend_exception_get_default());
 }
 
 /*
@@ -24,12 +24,15 @@ void sample_init_exception(TSRMLS_D) {
  */
 PHP_MINIT_FUNCTION(sample)
 {
-	sample_init_exception(TSRMLS_C);
+	sample_init_exception();
 }
 
 /*
  5. throw the exception
  */
+ZEND_BEGIN_ARG_INFO(ArgInfo_sample_trigger_exception, 0)
+ZEND_END_ARG_INFO()
+
 PHP_FUNCTION(sample_trigger_exception)
 {
 	zend_throw_exception_ex(
@@ -38,7 +41,7 @@ PHP_FUNCTION(sample_trigger_exception)
 }
 
 const zend_function_entry php_sample_functions[] = {
-	ZEND_NS_NAMED_FE(PHP_SAMPLE_EXT_NS, triggerException, ZEND_FN(sample_trigger_exception), NULL)
+	ZEND_NS_NAMED_FE(PHP_SAMPLE_EXT_NS, triggerException, ZEND_FN(sample_trigger_exception), ArgInfo_sample_trigger_exception)
 	PHP_FE_END
 };
 
