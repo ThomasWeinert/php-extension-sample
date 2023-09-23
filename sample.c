@@ -25,7 +25,7 @@ typedef struct _php_sample_greeting_t {
 #define php_sample_greeting_fetch(z) php_sample_greeting_from(Z_OBJ_P(z))
 
 /*
- 4. A handler function to create the object
+ 4. Implement handler function to create the object
 */
 zend_object* php_sample_greeting_create(zend_class_entry *ce) {
 	php_sample_greeting_t *s = (php_sample_greeting_t*) emalloc(sizeof(php_sample_greeting_t) + zend_object_properties_size(ce));
@@ -36,13 +36,17 @@ zend_object* php_sample_greeting_create(zend_class_entry *ce) {
 }
 
 /*
- 5. A handler function to free the object
+ 5. Implement handler function to free the object
 */
 void php_sample_greeting_free(zend_object *o) {
 	php_sample_greeting_t *s = php_sample_greeting_from(o);
 	zval_dtor(&s->who);
 	zend_object_std_dtor(o);
 }
+
+ZEND_BEGIN_ARG_INFO(ArgInfo_sample_Greeting_construct, 0)
+    ZEND_ARG_TYPE_INFO(0, name, IS_STRING, 0)
+ZEND_END_ARG_INFO()
 
 PHP_METHOD(sample_Greeting, __construct) {
 	char *name;
@@ -53,25 +57,28 @@ PHP_METHOD(sample_Greeting, __construct) {
 	ZEND_PARSE_PARAMETERS_END();
 
 	/*
-	 8. Store constructor argument in the struct
+	 6. Store constructor argument in the struct
 	 */
 	php_sample_greeting_t *sample = php_sample_greeting_fetch(getThis());
 	ZVAL_STRINGL(&sample->who, name, name_len);
 }
 
+ZEND_BEGIN_ARG_INFO_EX(ArgInfo_sample_Greeting_hello, 0, 0, 0)
+ZEND_END_ARG_INFO()
+
 PHP_METHOD(sample_Greeting, hello) {
 	zval rv, *name, tmp;
 
 	/*
-	 9. Read the stored name from the struct
+	 7. Read the stored name from the struct
 	 */
 	php_sample_greeting_t *sample = php_sample_greeting_fetch(getThis());
 	php_printf("Hello %s!", Z_STRVAL(sample->who));
 }
 
 const zend_function_entry php_sample_greeting_class_functions[] = {
-	PHP_ME(sample_Greeting, __construct, NULL, ZEND_ACC_PUBLIC | ZEND_ACC_CTOR)
-	PHP_ME(sample_Greeting, hello, NULL, ZEND_ACC_PUBLIC)
+	PHP_ME(sample_Greeting, __construct, ArgInfo_sample_Greeting_construct, ZEND_ACC_PUBLIC | ZEND_ACC_CTOR)
+	PHP_ME(sample_Greeting, hello, ArgInfo_sample_Greeting_hello, ZEND_ACC_PUBLIC)
 	PHP_FE_END
 };
 
@@ -81,14 +88,14 @@ PHP_MINIT_FUNCTION(sample)
 	INIT_NS_CLASS_ENTRY(
 		ce, PHP_SAMPLE_EXT_NS, PHP_SAMPLE_CLASS_GREETING_NAME, php_sample_greeting_class_functions
 	);
-	php_sample_greeting_class_entry = zend_register_internal_class(&ce TSRMLS_CC);
+	php_sample_greeting_class_entry = zend_register_internal_class(&ce);
 	/*
-	 6. Set the create handler
+	 8. Set the create handler
 	 */
 	php_sample_greeting_class_entry->create_object = php_sample_greeting_create;
 
 	/*
-	 7. Copy the default handlers and add the free handler
+	 9. Copy the default handlers and add the free handler
 	 */
 	memcpy(&php_sample_greeting_handlers, zend_get_std_object_handlers(), sizeof(zend_object_handlers));
 	php_sample_greeting_handlers.offset = XtOffsetOf(php_sample_greeting_t, std);
