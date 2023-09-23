@@ -10,6 +10,9 @@ static zend_class_entry *php_sample_class_entry;
  2. Implement and register the method from the interface,
  otherwise the class will be abstract
 */
+ZEND_BEGIN_ARG_WITH_TENTATIVE_RETURN_TYPE_INFO_EX(ArgInfo_sample_Class_jsonSerialize, 0, 0, IS_MIXED, 0)
+ZEND_END_ARG_INFO()
+
 PHP_METHOD(sample_Class, jsonSerialize) {
 
 	array_init(return_value);
@@ -19,7 +22,7 @@ PHP_METHOD(sample_Class, jsonSerialize) {
 }
 
 const zend_function_entry php_sample_class_functions[] = {
-	PHP_ME(sample_Class, jsonSerialize, NULL, ZEND_ACC_PUBLIC)
+	PHP_ME(sample_Class, jsonSerialize, ArgInfo_sample_Class_jsonSerialize, ZEND_ACC_PUBLIC)
 	PHP_FE_END
 };
 
@@ -29,7 +32,7 @@ PHP_MINIT_FUNCTION(sample)
 	INIT_NS_CLASS_ENTRY(
 		ce, PHP_SAMPLE_EXT_NS, PHP_SAMPLE_CLASS_NAME, php_sample_class_functions
 	);
-	php_sample_class_entry = zend_register_internal_class(&ce TSRMLS_CC);
+	php_sample_class_entry = zend_register_internal_class(&ce);
 	/*
 	 1. define the interfaces implemented by the class. The interfaces are a variadic argument.
 	 */
