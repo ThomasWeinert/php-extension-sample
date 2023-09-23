@@ -4,7 +4,11 @@ Call method "do" on object argument without that method.
 <?php if (!extension_loaded("sample")) print "skip"; ?>
 --FILE--
 <?php
-\sample\greet(new stdClass);
+try {
+    \sample\greet(new stdClass);
+} catch (Error $e) {
+    echo "Error: ", $e->getMessage();
+}
 ?>
 --EXPECTF--
-Fatal error: sample\greet(): Unable to call method do() on object argument in %s002.php on line %d
+Error: Invalid callback stdClass::do, class stdClass does not have a method "do"

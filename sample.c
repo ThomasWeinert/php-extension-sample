@@ -1,5 +1,10 @@
 #include "php_sample.h"
 
+
+ZEND_BEGIN_ARG_INFO(ArgInfo_sample_greet, 0)
+    ZEND_ARG_TYPE_INFO(0, name, IS_OBJECT, 0)
+ZEND_END_ARG_INFO()
+
 PHP_FUNCTION(sample_greet)
 {
 	zval fname, params[1], *greeting;
@@ -10,26 +15,16 @@ PHP_FUNCTION(sample_greet)
 		Z_PARAM_OBJECT(greeting)
 	ZEND_PARSE_PARAMETERS_END();
 
-	if (
-		call_user_function(
-			NULL, greeting, &fname, return_value, 1, params TSRMLS_CC
-		) == FAILURE
-	) {
-		php_error_docref(
-			NULL TSRMLS_CC,
-			E_ERROR,
-			"Unable to call method do() on object argument"
-		);
-
-		RETVAL_FALSE;
-	}
+	call_user_function(
+        NULL, greeting, &fname, return_value, 1, params
+    );
 
 	zval_dtor(&fname);
 	zval_dtor(&params[0]);
 }
 
 const zend_function_entry php_sample_functions[] = {
-	ZEND_NS_NAMED_FE(PHP_SAMPLE_EXT_NS, greet, ZEND_FN(sample_greet), NULL)
+	ZEND_NS_NAMED_FE(PHP_SAMPLE_EXT_NS, greet, ZEND_FN(sample_greet), ArgInfo_sample_greet)
 	PHP_FE_END
 };
 
