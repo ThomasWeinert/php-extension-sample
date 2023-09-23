@@ -5,7 +5,13 @@
 */
 
 /*
- 2. implement a php function
+ * 2. Define argument information for the function
+ */
+ZEND_BEGIN_ARG_INFO_EX(arginfo_sample_hello_world, 0, 0, 0)
+ZEND_END_ARG_INFO()
+
+/*
+ 3. Implement the php function
 */
 PHP_FUNCTION(sample_hello_world)
 {
@@ -13,13 +19,13 @@ PHP_FUNCTION(sample_hello_world)
 }
 
 /*
- 3. define a list for your extension functions
+ 4. Define a list for your extension functions
 */
 const zend_function_entry php_sample_functions[] = {
 	/*
 	 4. register the function in the namespace
 	 */
-	ZEND_NS_NAMED_FE(PHP_SAMPLE_EXT_NS, helloWorld, ZEND_FN(sample_hello_world), NULL)
+	ZEND_NS_NAMED_FE(PHP_SAMPLE_EXT_NS, helloWorld, ZEND_FN(sample_hello_world), arginfo_sample_hello_world)
 	PHP_FE_END
 };
 
