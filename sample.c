@@ -1,5 +1,9 @@
 #include "php_sample.h"
 
+ZEND_BEGIN_ARG_INFO(ArgInfo_sample_output, 0)
+    ZEND_ARG_TYPE_INFO(0, value, IS_MIXED, 0)
+ZEND_END_ARG_INFO()
+
 PHP_FUNCTION(sample_output)
 {
 	zval *value;
@@ -41,7 +45,7 @@ PHP_FUNCTION(sample_output)
 		php_printf("String: %s", Z_STRVAL_P(value));
 		break;
 	case IS_RESOURCE :
-		php_printf("Resource: #%ld", Z_RESVAL_P(value));
+        zend_print_zval_r(value, 0);
 		break;
 	case IS_ARRAY :
 		php_printf("Array");
@@ -56,7 +60,7 @@ PHP_FUNCTION(sample_output)
 }
 
 const zend_function_entry php_sample_functions[] = {
-	ZEND_NS_NAMED_FE(PHP_SAMPLE_EXT_NS, output, ZEND_FN(sample_output), NULL)
+	ZEND_NS_NAMED_FE(PHP_SAMPLE_EXT_NS, output, ZEND_FN(sample_output), ArgInfo_sample_output)
 	PHP_FE_END
 };
 
