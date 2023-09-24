@@ -1,5 +1,9 @@
 #include "php_sample.h"
 
+ZEND_BEGIN_ARG_INFO(ArgInfo_sample_hello_name, 0)
+    ZEND_ARG_TYPE_INFO(0, name, IS_STRING, 0)
+ZEND_END_ARG_INFO()
+
 PHP_FUNCTION(sample_hello_name)
 {
 	/*
@@ -16,11 +20,11 @@ PHP_FUNCTION(sample_hello_name)
 		Z_PARAM_STRING(name, name_len)
 	ZEND_PARSE_PARAMETERS_END();
 
-	php_printf("Hello %s!", name, name_len);
+	php_printf("Hello %s!", name);
 }
 
 const zend_function_entry php_sample_functions[] = {
-	ZEND_NS_NAMED_FE(PHP_SAMPLE_EXT_NS, hello, ZEND_FN(sample_hello_name), NULL)
+	ZEND_NS_NAMED_FE(PHP_SAMPLE_EXT_NS, hello, ZEND_FN(sample_hello_name), ArgInfo_sample_hello_name)
 	PHP_FE_END
 };
 
