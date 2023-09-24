@@ -1,5 +1,8 @@
 #include "php_sample.h"
 
+ZEND_BEGIN_ARG_INFO(ArgInfo_sample_answer, 0)
+ZEND_END_ARG_INFO()
+
 PHP_FUNCTION(sample_answer)
 {
 	/*
@@ -13,14 +16,14 @@ PHP_FUNCTION(sample_answer)
 	 */
 	zend_update_property_stringl(
 		zend_standard_class_def,
-		return_value,
+		Z_OBJ_P(return_value),
 		ZEND_STRL("greeting"),
 		ZEND_STRL("Hello World!")
 	);
 }
 
 const zend_function_entry php_sample_functions[] = {
-	ZEND_NS_NAMED_FE(PHP_SAMPLE_EXT_NS, answer, ZEND_FN(sample_answer), NULL)
+	ZEND_NS_NAMED_FE(PHP_SAMPLE_EXT_NS, answer, ZEND_FN(sample_answer), ArgInfo_sample_answer)
 	PHP_FE_END
 };
 
