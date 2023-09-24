@@ -1,5 +1,10 @@
 #include "php_sample.h"
 
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(ArgInfo_sample_multiply, 0, 1, IS_LONG, 0)
+    ZEND_ARG_TYPE_INFO(0, first, IS_LONG, 0)
+    ZEND_ARG_TYPE_INFO_WITH_DEFAULT_VALUE(0, second, IS_LONG, 0, 1)
+ZEND_END_ARG_INFO()
+
 PHP_FUNCTION(sample_multiply)
 {
 	/*
@@ -22,7 +27,7 @@ PHP_FUNCTION(sample_multiply)
 }
 
 const zend_function_entry php_sample_functions[] = {
-	ZEND_NS_NAMED_FE(PHP_SAMPLE_EXT_NS, multiply, ZEND_FN(sample_multiply), NULL)
+	ZEND_NS_NAMED_FE(PHP_SAMPLE_EXT_NS, multiply, ZEND_FN(sample_multiply), ArgInfo_sample_multiply)
 	PHP_FE_END
 };
 
