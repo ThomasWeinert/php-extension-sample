@@ -1,7 +1,11 @@
 #include "php_sample.h"
+/*
+ * 1. Include php info functions
+ */
+#include "ext/standard/info.h"
 
 /*
-	1. Implement MINFO function
+	2. Implement MINFO function
  */
 PHP_MINFO_FUNCTION(sample)
 {
@@ -20,7 +24,7 @@ zend_module_entry sample_module_entry = {
 	NULL, /* RINIT */
 	NULL, /* RSHUTDOWN */
 	/*
-	 2. provide MINFO function
+	 3. provide MINFO function
 	 */
 	PHP_MINFO(sample), /* MINFO */
 	PHP_SAMPLE_EXT_VERSION,
