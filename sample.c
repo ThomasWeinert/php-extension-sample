@@ -25,6 +25,9 @@ static void sample_resource_dtor(zend_resource *rsrc)
 /*
  4. implement a php function that creates the resource
  */
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO(ArgInfo_sample_create_resource, IS_RESOURCE, 0)
+ZEND_END_ARG_INFO()
+
 PHP_FUNCTION(sample_create_resource)
 {
 	sample_resource *r;
@@ -36,6 +39,10 @@ PHP_FUNCTION(sample_create_resource)
 /*
  6. Make use of the resource
  */
+ZEND_BEGIN_ARG_INFO(ArgInfo_sample_use_resource, 0)
+    ZEND_ARG_TYPE_INFO(0, name, IS_RESOURCE, 0)
+ZEND_END_ARG_INFO()
+
 PHP_FUNCTION(sample_use_resource)
 {
 	sample_resource *r;
@@ -59,8 +66,8 @@ PHP_MINIT_FUNCTION(sample)
 }
 
 const zend_function_entry php_sample_functions[] = {
-	ZEND_NS_NAMED_FE(PHP_SAMPLE_EXT_NS, createResource, ZEND_FN(sample_create_resource), NULL)
-	ZEND_NS_NAMED_FE(PHP_SAMPLE_EXT_NS, useResource, ZEND_FN(sample_use_resource), NULL)
+	ZEND_NS_NAMED_FE(PHP_SAMPLE_EXT_NS, createResource, ZEND_FN(sample_create_resource), ArgInfo_sample_create_resource)
+	ZEND_NS_NAMED_FE(PHP_SAMPLE_EXT_NS, useResource, ZEND_FN(sample_use_resource), ArgInfo_sample_use_resource)
 	PHP_FE_END
 };
 
