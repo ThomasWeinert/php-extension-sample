@@ -9,6 +9,9 @@
 
 static zend_class_entry *php_sample_greeting_class_entry;
 
+ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO(ArgInfo_sample_getGreeting, sample\\Greeting, 0)
+ZEND_END_ARG_INFO()
+
 PHP_FUNCTION(sample_getGreeting)
 {
 	zval name;
@@ -24,7 +27,7 @@ PHP_FUNCTION(sample_getGreeting)
 	  3. call constructor on that object, providing the argument
 	*/
     zend_call_method_with_1_params(
-		return_value,
+		Z_OBJ_P(return_value),
 		php_sample_greeting_class_entry,
 		&php_sample_greeting_class_entry->constructor,
 		"__construct",
@@ -36,9 +39,14 @@ PHP_FUNCTION(sample_getGreeting)
 }
 
 const zend_function_entry php_sample_functions[] = {
-	ZEND_NS_NAMED_FE(PHP_SAMPLE_EXT_NS, getGreeting, ZEND_FN(sample_getGreeting), NULL)
+	ZEND_NS_NAMED_FE(PHP_SAMPLE_EXT_NS, getGreeting, ZEND_FN(sample_getGreeting), ArgInfo_sample_getGreeting)
 	PHP_FE_END
 };
+
+
+ZEND_BEGIN_ARG_INFO(ArgInfo_sample_construct, 0)
+    ZEND_ARG_TYPE_INFO(0, name, IS_STRING, 0)
+ZEND_END_ARG_INFO()
 
 PHP_METHOD(sample_Greeting, __construct) {
 	zval *object;
@@ -52,17 +60,20 @@ PHP_METHOD(sample_Greeting, __construct) {
 	object = getThis();
 	zend_update_property_stringl(
 		php_sample_greeting_class_entry,
-		object,
+        Z_OBJ_P(object),
 		ZEND_STRL("name"),
 		name,
 		name_len
 	);
 }
 
+ZEND_BEGIN_ARG_INFO(ArgInfo_sample_hello, 0)
+ZEND_END_ARG_INFO()
+
 PHP_METHOD(sample_Greeting, hello) {
 	zval rv, *name, tmp;
 
-	name = zend_read_property(php_sample_greeting_class_entry, getThis(), ZEND_STRL("name"), 0, &rv);
+	name = zend_read_property(php_sample_greeting_class_entry, Z_OBJ_P(getThis()), ZEND_STRL("name"), 0, &rv);
 
 	ZVAL_COPY(&tmp, name);
 	convert_to_string(&tmp);
@@ -71,8 +82,8 @@ PHP_METHOD(sample_Greeting, hello) {
 }
 
 const zend_function_entry php_sample_greeting_class_functions[] = {
-	PHP_ME(sample_Greeting, __construct, NULL, ZEND_ACC_PUBLIC | ZEND_ACC_CTOR)
-	PHP_ME(sample_Greeting, hello, NULL, ZEND_ACC_PUBLIC)
+	PHP_ME(sample_Greeting, __construct, ArgInfo_sample_construct, ZEND_ACC_PUBLIC | ZEND_ACC_CTOR)
+	PHP_ME(sample_Greeting, hello, ArgInfo_sample_hello, ZEND_ACC_PUBLIC)
 	PHP_FE_END
 };
 
@@ -82,7 +93,7 @@ PHP_MINIT_FUNCTION(sample)
 	INIT_NS_CLASS_ENTRY(
 		ce, PHP_SAMPLE_EXT_NS, PHP_SAMPLE_CLASS_GREETING_NAME, php_sample_greeting_class_functions
 	);
-	php_sample_greeting_class_entry = zend_register_internal_class(&ce TSRMLS_CC);
+	php_sample_greeting_class_entry = zend_register_internal_class(&ce);
 	zend_declare_property_stringl(
 		php_sample_greeting_class_entry, ZEND_STRL("name"), ZEND_STRL("World"), ZEND_ACC_PUBLIC
 	);
