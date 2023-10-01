@@ -1,8 +1,5 @@
 #include "php_sample.h"
-
-ZEND_BEGIN_ARG_INFO(ArgInfo_sample_output, 0)
-    ZEND_ARG_TYPE_INFO(0, value, IS_MIXED, 0)
-ZEND_END_ARG_INFO()
+#include "sample_arginfo.h"
 
 PHP_FUNCTION(sample_output)
 {
@@ -60,7 +57,7 @@ PHP_FUNCTION(sample_output)
 }
 
 const zend_function_entry php_sample_functions[] = {
-	ZEND_NS_NAMED_FE(PHP_SAMPLE_EXT_NS, output, ZEND_FN(sample_output), ArgInfo_sample_output)
+	ZEND_NS_NAMED_FE(PHP_SAMPLE_EXT_NS, output, ZEND_FN(sample_output), arginfo_Sample_hello)
 	PHP_FE_END
 };
 
