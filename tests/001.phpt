@@ -4,7 +4,7 @@ Call function with optional argument
 <?php if (!extension_loaded("sample")) print "skip"; ?>
 --FILE--
 <?php 
-echo \sample\multiply(21), "\n", \sample\multiply(21, 2);
+echo \Sample\multiply(21), "\n", \Sample\multiply(21, 2);
 ?>
 --EXPECT--
 21
