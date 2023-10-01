@@ -1,9 +1,6 @@
 #include "php_sample.h"
+#include "sample_arginfo.h"
 
-
-ZEND_BEGIN_ARG_INFO(ArgInfo_sample_hello_callback, 0)
-    ZEND_ARG_TYPE_INFO(0, name, IS_CALLABLE, 0)
-ZEND_END_ARG_INFO()
 
 PHP_FUNCTION(sample_hello_callback)
 {
@@ -42,7 +39,7 @@ PHP_FUNCTION(sample_hello_callback)
 }
 
 const zend_function_entry php_sample_functions[] = {
-	ZEND_NS_NAMED_FE(PHP_SAMPLE_EXT_NS, hello, ZEND_FN(sample_hello_callback), ArgInfo_sample_hello_callback)
+	ZEND_NS_NAMED_FE(PHP_SAMPLE_EXT_NS, hello, ZEND_FN(sample_hello_callback), arginfo_Sample_hello)
 	PHP_FE_END
 };
 
