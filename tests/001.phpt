@@ -5,7 +5,7 @@ getValue() should return alternating values of 21 and 42
 --FILE--
 <?php
 for ($i = 0; $i < 4; $i++) {
-  echo \sample\getValue();
+  echo \Sample\getValue();
 }
 ?>
 --EXPECT--

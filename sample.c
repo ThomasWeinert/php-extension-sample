@@ -1,4 +1,5 @@
 #include "php_sample.h"
+#include "sample_arginfo.h"
 
 /*
  1. & 2. see php_sample.h
@@ -8,10 +9,6 @@
  3. Declare global module variables
  */
 ZEND_DECLARE_MODULE_GLOBALS(sample)
-
-
-ZEND_BEGIN_ARG_INFO(ArgInfo_sample_get_value, 0)
-ZEND_END_ARG_INFO()
 
 PHP_FUNCTION(sample_get_value)
 {
@@ -39,7 +36,7 @@ PHP_RINIT_FUNCTION(sample)
 }
 
 const zend_function_entry php_sample_functions[] = {
-	ZEND_NS_NAMED_FE(PHP_SAMPLE_EXT_NS, getValue, ZEND_FN(sample_get_value), ArgInfo_sample_get_value)
+	ZEND_NS_NAMED_FE(PHP_SAMPLE_EXT_NS, getValue, ZEND_FN(sample_get_value), arginfo_Sample_getValue)
 	PHP_FE_END
 };
 
