@@ -4,8 +4,8 @@ Create and use sample resource
 <?php if (!extension_loaded("sample")) print "skip"; ?>
 --FILE--
 <?php 
-$r = sample\createResource();
-sample\useResource($r);
+$r = Sample\createResource();
+Sample\useResource($r);
 ?>
 --EXPECT--
 Number: 42
