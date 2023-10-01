@@ -1,7 +1,5 @@
 #include "php_sample.h"
-
-ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO(ArgInfo_sample_getGreetings, IS_ARRAY, 0)
-ZEND_END_ARG_INFO()
+#include "sample_arginfo.h"
 
 PHP_FUNCTION(sample_getGreetings)
 {
@@ -30,7 +28,7 @@ PHP_FUNCTION(sample_getGreetings)
 }
 
 const zend_function_entry php_sample_functions[] = {
-	ZEND_NS_NAMED_FE(PHP_SAMPLE_EXT_NS, getGreetings, ZEND_FN(sample_getGreetings), ArgInfo_sample_getGreetings)
+	ZEND_NS_NAMED_FE(PHP_SAMPLE_EXT_NS, getGreetings, ZEND_FN(sample_getGreetings), arginfo_Sample_getGreetings)
 	PHP_FE_END
 };
 
