@@ -1,14 +1,9 @@
 #include "php_sample.h"
+#include "sample_arginfo.h"
 
-#define SAMPLE_NS "sample"
 #define PHP_SAMPLE_CLASS_GREETING_NAME "Greeting"
 
 static zend_class_entry *php_sample_greeting_class_entry;
-
-
-ZEND_BEGIN_ARG_INFO(ArgInfo_sample_Greeting_construct, 0)
-  ZEND_ARG_TYPE_INFO(0, name, IS_STRING, 0)
-ZEND_END_ARG_INFO()
 
 PHP_METHOD(sample_Greeting, __construct) {
 	zval *object;
@@ -33,9 +28,6 @@ PHP_METHOD(sample_Greeting, __construct) {
 	);
 }
 
-ZEND_BEGIN_ARG_INFO(ArgInfo_sample_Greeting_hello, 0)
-ZEND_END_ARG_INFO()
-
 PHP_METHOD(sample_Greeting, hello) {
 	zval rv, *name, tmp;
 
@@ -54,8 +46,8 @@ PHP_METHOD(sample_Greeting, hello) {
 }
 
 const zend_function_entry php_sample_greeting_class_functions[] = {
-	PHP_ME(sample_Greeting, __construct, ArgInfo_sample_Greeting_construct, ZEND_ACC_PUBLIC | ZEND_ACC_CTOR)
-	PHP_ME(sample_Greeting, hello, ArgInfo_sample_Greeting_hello, ZEND_ACC_PUBLIC)
+	PHP_ME(sample_Greeting, __construct, arginfo_class_Sample_Greeting___construct, ZEND_ACC_PUBLIC | ZEND_ACC_CTOR)
+	PHP_ME(sample_Greeting, hello, arginfo_class_Sample_Greeting_hello, ZEND_ACC_PUBLIC)
 	PHP_FE_END
 };
 
