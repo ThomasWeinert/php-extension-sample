@@ -1,4 +1,5 @@
 #include "php_sample.h"
+#include "sample_arginfo.h"
 
 /*
  1. a name for the interface
@@ -12,16 +13,10 @@
 static zend_class_entry *php_sample_interface_entry;
 
 /*
- 3. arguments for the interface method
- */
-ZEND_BEGIN_ARG_INFO(ArgInfo_sample_interface_sampleMethod, 0)
-ZEND_END_ARG_INFO()
-
-/*
- 4. a function list for the methods
+ 3. a function list for the methods
 */
 const zend_function_entry php_sample_interface_functions[] = {
-	PHP_ABSTRACT_ME(sample_Interface, sampleMethod, ArgInfo_sample_interface_sampleMethod)
+	PHP_ABSTRACT_ME(sample_Interface, sampleMethod, arginfo_class_Sample_SampleInterface_sampleMethod)
 	PHP_FE_END
 };
 

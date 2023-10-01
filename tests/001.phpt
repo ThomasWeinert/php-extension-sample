@@ -5,7 +5,7 @@ Implement Sample\SampleInterface into an object and validate
 --FILE--
 <?php
 class SampleClass implements Sample\SampleInterface {
-  public function sampleMethod() {
+  public function sampleMethod(): void {
     echo ($this instanceof Sample\SampleInterface) ? 'Implemented Interface' : 'FAIL';
   }
 }
