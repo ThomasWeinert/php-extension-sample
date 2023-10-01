@@ -1,16 +1,14 @@
 #include "php_sample.h"
+#include "sample_arginfo.h"
+
 /*
    1. include helper function to call functions
  */
 #include "Zend/zend_interfaces.h"
 
-#define SAMPLE_NS "sample"
 #define PHP_SAMPLE_CLASS_GREETING_NAME "Greeting"
 
 static zend_class_entry *php_sample_greeting_class_entry;
-
-ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO(ArgInfo_sample_getGreeting, sample\\Greeting, 0)
-ZEND_END_ARG_INFO()
 
 PHP_FUNCTION(sample_getGreeting)
 {
@@ -39,14 +37,10 @@ PHP_FUNCTION(sample_getGreeting)
 }
 
 const zend_function_entry php_sample_functions[] = {
-	ZEND_NS_NAMED_FE(PHP_SAMPLE_EXT_NS, getGreeting, ZEND_FN(sample_getGreeting), ArgInfo_sample_getGreeting)
+	ZEND_NS_NAMED_FE(PHP_SAMPLE_EXT_NS, getGreeting, ZEND_FN(sample_getGreeting), arginfo_Sample_getGreeting)
 	PHP_FE_END
 };
 
-
-ZEND_BEGIN_ARG_INFO(ArgInfo_sample_construct, 0)
-    ZEND_ARG_TYPE_INFO(0, name, IS_STRING, 0)
-ZEND_END_ARG_INFO()
 
 PHP_METHOD(sample_Greeting, __construct) {
 	zval *object;
@@ -67,9 +61,6 @@ PHP_METHOD(sample_Greeting, __construct) {
 	);
 }
 
-ZEND_BEGIN_ARG_INFO(ArgInfo_sample_hello, 0)
-ZEND_END_ARG_INFO()
-
 PHP_METHOD(sample_Greeting, hello) {
 	zval rv, *name, tmp;
 
@@ -82,8 +73,8 @@ PHP_METHOD(sample_Greeting, hello) {
 }
 
 const zend_function_entry php_sample_greeting_class_functions[] = {
-	PHP_ME(sample_Greeting, __construct, ArgInfo_sample_construct, ZEND_ACC_PUBLIC | ZEND_ACC_CTOR)
-	PHP_ME(sample_Greeting, hello, ArgInfo_sample_hello, ZEND_ACC_PUBLIC)
+	PHP_ME(sample_Greeting, __construct, arginfo_class_Sample_Greeting___construct, ZEND_ACC_PUBLIC | ZEND_ACC_CTOR)
+	PHP_ME(sample_Greeting, hello, arginfo_class_Sample_Greeting_hello, ZEND_ACC_PUBLIC)
 	PHP_FE_END
 };
 
