@@ -1,4 +1,5 @@
 #include "php_sample.h"
+#include "sample_arginfo.h"
 
 /*
  1. a name for the class

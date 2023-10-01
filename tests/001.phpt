@@ -5,7 +5,7 @@ Extend abstract Sample\SampleClass and validate
 --FILE--
 <?php
 class SampleClass extends Sample\SampleClass {
-  public function sampleMethod() {
+  public function sampleMethod(): void {
     echo ($this instanceof Sample\SampleClass) ? 'SUCCESS' : 'FAIL';
   }
 }
