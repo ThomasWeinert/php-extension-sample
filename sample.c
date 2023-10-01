@@ -1,5 +1,6 @@
 #include "php_sample.h"
 #include "ext/json/php_json.h"
+#include "sample_arginfo.h"
 
 #define SAMPLE_NS "sample"
 #define PHP_SAMPLE_CLASS_NAME "HelloWorld"
@@ -10,8 +11,6 @@ static zend_class_entry *php_sample_class_entry;
  2. Implement and register the method from the interface,
  otherwise the class will be abstract
 */
-ZEND_BEGIN_ARG_WITH_TENTATIVE_RETURN_TYPE_INFO_EX(ArgInfo_sample_Class_jsonSerialize, 0, 0, IS_MIXED, 0)
-ZEND_END_ARG_INFO()
 
 PHP_METHOD(sample_Class, jsonSerialize) {
 
@@ -22,7 +21,7 @@ PHP_METHOD(sample_Class, jsonSerialize) {
 }
 
 const zend_function_entry php_sample_class_functions[] = {
-	PHP_ME(sample_Class, jsonSerialize, ArgInfo_sample_Class_jsonSerialize, ZEND_ACC_PUBLIC)
+	PHP_ME(sample_Class, jsonSerialize, arginfo_class_Sample_HelloWorld_jsonSerialize, ZEND_ACC_PUBLIC)
 	PHP_FE_END
 };
 
