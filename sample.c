@@ -1,7 +1,5 @@
 #include "php_sample.h"
-
-ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO(ArgInfo_sample_answer, IS_LONG, 0)
-ZEND_END_ARG_INFO()
+#include "sample_arginfo.h"
 
 PHP_FUNCTION(sample_answer)
 {
@@ -29,7 +27,7 @@ PHP_FUNCTION(sample_answer)
 }
 
 const zend_function_entry php_sample_functions[] = {
-	ZEND_NS_NAMED_FE(PHP_SAMPLE_EXT_NS, answer, ZEND_FN(sample_answer), ArgInfo_sample_answer)
+	ZEND_NS_NAMED_FE(PHP_SAMPLE_EXT_NS, answer, ZEND_FN(sample_answer), arginfo_Sample_answer)
 	PHP_FE_END
 };
 
