@@ -3,7 +3,7 @@
 
 #define PHP_SAMPLE_EXT_NAME  "sample"
 #define PHP_SAMPLE_EXT_VERSION   "1.0"
-#define PHP_SAMPLE_EXT_NS "sample"
+#define PHP_SAMPLE_EXT_NS "Sample"
 
 #ifdef HAVE_CONFIG_H
 #include "config.h"
