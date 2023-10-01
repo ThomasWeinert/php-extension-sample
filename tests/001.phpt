@@ -4,7 +4,7 @@ Return an stdClass instance with some properties set.
 <?php if (!extension_loaded("sample")) print "skip"; ?>
 --FILE--
 <?php 
-var_dump(\sample\answer());
+var_dump(\Sample\answer());
 ?>
 --EXPECT--
 object(stdClass)#1 (1) {
