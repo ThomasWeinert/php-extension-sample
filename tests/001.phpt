@@ -4,7 +4,7 @@ Check for sample presence
 <?php if (!extension_loaded("sample")) print "skip"; ?>
 --FILE--
 <?php 
-echo \sample\helloWorld();
+echo \Sample\helloWorld();
 ?>
 --EXPECT--
 Hello World!

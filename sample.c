@@ -1,14 +1,10 @@
 #include "php_sample.h"
 
 /*
- 1. Define namespace in php_sample.h
+ 1. Define namespace in php_sample.h and include generated
+    argument information.
 */
-
-/*
- * 2. Define argument information for the function
- */
-ZEND_BEGIN_ARG_INFO_EX(arginfo_sample_hello_world, 0, 0, 0)
-ZEND_END_ARG_INFO()
+#include "sample_arginfo.h"
 
 /*
  3. Implement the php function
@@ -25,7 +21,7 @@ const zend_function_entry php_sample_functions[] = {
 	/*
 	 4. register the function in the namespace
 	 */
-	ZEND_NS_NAMED_FE(PHP_SAMPLE_EXT_NS, helloWorld, ZEND_FN(sample_hello_world), arginfo_sample_hello_world)
+	ZEND_NS_NAMED_FE(PHP_SAMPLE_EXT_NS, helloWorld, ZEND_FN(sample_hello_world), arginfo_Sample_helloWorld)
 	PHP_FE_END
 };
 
