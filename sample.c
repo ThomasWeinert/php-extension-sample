@@ -1,4 +1,6 @@
 #include "php_sample.h"
+#include "sample_arginfo.h"
+
 /*
  1. include exception API
  */
@@ -30,8 +32,6 @@ PHP_MINIT_FUNCTION(sample)
 /*
  5. throw the exception
  */
-ZEND_BEGIN_ARG_INFO(ArgInfo_sample_trigger_exception, 0)
-ZEND_END_ARG_INFO()
 
 PHP_FUNCTION(sample_trigger_exception)
 {
@@ -41,7 +41,7 @@ PHP_FUNCTION(sample_trigger_exception)
 }
 
 const zend_function_entry php_sample_functions[] = {
-	ZEND_NS_NAMED_FE(PHP_SAMPLE_EXT_NS, triggerException, ZEND_FN(sample_trigger_exception), ArgInfo_sample_trigger_exception)
+	ZEND_NS_NAMED_FE(PHP_SAMPLE_EXT_NS, triggerException, ZEND_FN(sample_trigger_exception), arginfo_Sample_triggerException)
 	PHP_FE_END
 };
 
