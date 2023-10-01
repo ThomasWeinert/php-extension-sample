@@ -7,7 +7,7 @@
 /*
  1. define the namespace for your extension
 */
-#define PHP_SAMPLE_EXT_NS "sample"
+#define PHP_SAMPLE_EXT_NS "Sample"
 
 #ifdef HAVE_CONFIG_H
 #include "config.h"
