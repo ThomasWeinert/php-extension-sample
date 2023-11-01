@@ -5,7 +5,7 @@ Let method do() throw an exception.
 --FILE--
 <?php
 class NoHello {
-    public function do($name) {
+    public function do() {
         throw new LogicException('No Greeting.');
     }
 }

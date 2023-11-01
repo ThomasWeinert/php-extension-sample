@@ -1,22 +1,16 @@
+#include "zend_interfaces.h"
 #include "php_sample.h"
 #include "sample_arginfo.h"
 
 PHP_FUNCTION(sample_greet)
 {
-	zval fname, params[1], *greeting;
-	ZVAL_STRING(&fname, "do");
-	ZVAL_STRING(&params[0], "World");
+    zval * greeting;
 
 	ZEND_PARSE_PARAMETERS_START(1, 1)
 		Z_PARAM_OBJECT(greeting)
 	ZEND_PARSE_PARAMETERS_END();
 
-	call_user_function(
-        NULL, greeting, &fname, return_value, 1, params
-    );
-
-	zval_dtor(&fname);
-	zval_dtor(&params[0]);
+    zend_call_method_with_0_params(Z_OBJ_P(greeting), Z_OBJCE_P(greeting), NULL, "do", NULL);
 }
 
 const zend_function_entry php_sample_functions[] = {

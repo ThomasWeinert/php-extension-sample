@@ -5,12 +5,12 @@ Call method "do" on provided object argument.
 --FILE--
 <?php
 class Hello {
-    public function do($name) {
-        printf("Hello %s!\n", $name);
+    public function do() {
+        printf("Hello World!\n");
     }
 }
 
-\sample\greet(new Hello("World"));
+\sample\greet(new Hello());
 ?>
 --EXPECT--
 Hello World!
