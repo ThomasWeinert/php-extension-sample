@@ -11,4 +11,4 @@ try {
 }
 ?>
 --EXPECTF--
-Error: Invalid callback stdClass::do, class stdClass does not have a method "do"
+Fatal error: Couldn't find implementation for method stdClass::do in Unknown on line 0
