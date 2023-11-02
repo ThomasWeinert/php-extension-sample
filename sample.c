@@ -10,7 +10,7 @@ PHP_FUNCTION(sample_greet)
 		Z_PARAM_OBJECT(greeting)
 	ZEND_PARSE_PARAMETERS_END();
 
-    zend_call_method_with_0_params(Z_OBJ_P(greeting), Z_OBJCE_P(greeting), NULL, "do", NULL);
+    zend_call_method_with_0_params(Z_OBJ_P(greeting), NULL, NULL, "do", NULL);
 }
 
 const zend_function_entry php_sample_functions[] = {
