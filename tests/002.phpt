@@ -5,7 +5,7 @@ Call method "do" on object argument without that method.
 --FILE--
 <?php
 try {
-    \sample\greet(new stdClass);
+    \sample\countdown(new stdClass);
 } catch (Error $e) {
     echo "Error: ", $e->getMessage();
 }

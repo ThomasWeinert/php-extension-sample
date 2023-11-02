@@ -4,13 +4,13 @@ Let method do() throw an exception.
 <?php if (!extension_loaded("sample")) print "skip"; ?>
 --FILE--
 <?php
-class NoHello {
+class Target {
     public function do($name) {
         throw new LogicException('No Greeting.');
     }
 }
 try {
-\sample\greet(new NoHello);
+\sample\countdown(new Target);
 } catch (LogicException $e) {
   echo 'LogicException: ', $e->getMessage();
 }

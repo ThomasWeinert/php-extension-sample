@@ -1,5 +1,5 @@
 --TEST--
-Call method "do" repeatedly on provided object argument.
+Call method "do" five times on provided object argument.
 --SKIPIF--
 <?php if (!extension_loaded("sample")) print "skip"; ?>
 --FILE--
@@ -10,14 +10,9 @@ class Target {
     }
 }
 
-\sample\countdown(new Target());
+\sample\countdown(new Target(), 5);
 ?>
 --EXPECT--
-[10]
-[9]
-[8]
-[7]
-[6]
 [5]
 [4]
 [3]

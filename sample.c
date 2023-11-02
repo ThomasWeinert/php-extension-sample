@@ -2,24 +2,36 @@
 #include "php_sample.h"
 #include "sample_arginfo.h"
 
-PHP_FUNCTION(sample_greet)
+PHP_FUNCTION(sample_countdown)
 {
-	zval target, *greeting;
-	ZVAL_STRING(&target, "World");
+	zval *target, step;
+    zend_long start = 10;
 
-	ZEND_PARSE_PARAMETERS_START(1, 1)
-		Z_PARAM_OBJECT(greeting)
+	ZEND_PARSE_PARAMETERS_START(1, 2)
+        Z_PARAM_OBJECT(target)
+        Z_PARAM_OPTIONAL
+        Z_PARAM_LONG(start)
 	ZEND_PARSE_PARAMETERS_END();
 
-    zend_call_method_with_1_params(
-        Z_OBJ_P(greeting), NULL, NULL, "do", NULL, &target
-    );
+    /*
+     * Cache function reference for repeated calls
+     */
+    zend_function *zfc = NULL;
 
-	zval_dtor(&target);
+    for (int i = start; i > 0; --i) {
+        ZVAL_LONG(&step, i);
+
+        zend_call_method_with_1_params(
+            Z_OBJ_P(target), NULL, &zfc, "do", NULL, &step
+        );
+
+        zval_dtor(&step);
+    }
+
 }
 
 const zend_function_entry php_sample_functions[] = {
-	ZEND_NS_NAMED_FE(PHP_SAMPLE_EXT_NS, greet, ZEND_FN(sample_greet), arginfo_Sample_greet)
+	ZEND_NS_NAMED_FE(PHP_SAMPLE_EXT_NS, countdown, ZEND_FN(sample_countdown), arginfo_Sample_countdown)
 	PHP_FE_END
 };
 

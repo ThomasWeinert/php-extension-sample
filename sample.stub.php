@@ -2,7 +2,7 @@
 
 namespace Sample {
 
-  function greet(object $greeting): void {
+  function countdown(object $target, int $start = 10): void {
   }
 
 }
